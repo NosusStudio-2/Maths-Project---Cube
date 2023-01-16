@@ -75,6 +75,7 @@ public:
 
 	MatrixXd rotationMatrix;
 	Cube cube1;
+	Point3D angles;
 	Projection2D projection1;
 	double focalLenght;
 };

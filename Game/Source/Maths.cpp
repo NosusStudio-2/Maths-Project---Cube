@@ -30,7 +30,10 @@ bool Maths::Start()
 				0, 1, 0,
 				0, 0, 1;
 	rotationMatrix = newrot;
+	
+	angles = { 0,0,0 };
 
+	focalLenght = (double)(1 / 34);
 
 	return ret;
 }
@@ -39,12 +42,23 @@ bool Maths::PreUpdate()
 {
 	bool ret = true;
 
+	//from angle to rotation matrix
+	MatrixXd eulerAngles(3, 1);
+	eulerAngles <<	angles.z,
+					angles.y,
+					angles.x;
+
+	rotationMatrix = RotationChangeOfWritting(eulerAngles,'e','r');
+
 	//applies current rotation
 	Cube cubeRotated = RotatingCube(cube1, rotationMatrix);
 	//from 3d points to 2d projection
 	projection1 = FromCubeToProjection(cubeRotated);
-
-	
+	for (size_t i = 0; i < 8; i++)
+	{
+		projection1.points[i].x = projection1.points[i].x * 16000 + 300;
+		projection1.points[i].y = projection1.points[i].y * 16000 + 100;
+	}
 
 	return ret;
 }
@@ -61,6 +75,7 @@ bool Maths::PostUpdate()
 	bool ret = true;
 	//print cube's projection
 
+
 	app->render->DrawLine(projection1.points[0].x, projection1.points[0].y, projection1.points[1].x, projection1.points[1].y, 255, 255, 255);
 	app->render->DrawLine(projection1.points[2].x, projection1.points[2].y, projection1.points[1].x, projection1.points[1].y, 255, 255, 255);
 	app->render->DrawLine(projection1.points[2].x, projection1.points[2].y, projection1.points[3].x, projection1.points[3].y, 255, 255, 255);
@@ -71,10 +86,10 @@ bool Maths::PostUpdate()
 	app->render->DrawLine(projection1.points[2+4].x, projection1.points[2+4].y, projection1.points[3+4].x, projection1.points[3+4].y, 255, 255, 255);
 	app->render->DrawLine(projection1.points[0+4].x, projection1.points[0+4].y, projection1.points[3+4].x, projection1.points[3+4].y, 255, 255, 255);
 
-	app->render->DrawLine(projection1.points[0].x, projection1.points[0].y, projection1.points[4].x, projection1.points[1].y, 255, 255, 255);
-	app->render->DrawLine(projection1.points[1].x, projection1.points[1].y, projection1.points[5].x, projection1.points[1].y, 255, 255, 255);
-	app->render->DrawLine(projection1.points[2].x, projection1.points[2].y, projection1.points[6].x, projection1.points[3].y, 255, 255, 255);
-	app->render->DrawLine(projection1.points[3].x, projection1.points[3].y, projection1.points[7].x, projection1.points[3].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[0].x, projection1.points[0].y, projection1.points[4].x, projection1.points[4].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[1].x, projection1.points[1].y, projection1.points[5].x, projection1.points[5].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[2].x, projection1.points[2].y, projection1.points[6].x, projection1.points[6].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[3].x, projection1.points[3].y, projection1.points[7].x, projection1.points[7].y, 255, 255, 255);
 	return ret;
 }
 
@@ -405,10 +420,16 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 Projection2D Maths::FromCubeToProjection(Cube c)
 {
 	Projection2D p;
+	
+	focalLenght = 0.0294117647;
 	for (size_t i = 0; i < 8; i++)
 	{
+		if (c.points[i].z == 0)
+		{
+			c.points[i].z = 0.000001;
+		}
 		p.points[i].x = c.points[i].x / c.points[i].z * focalLenght;
-		p.points[i].y = c.points[i].y / c.points[i].y * focalLenght;
+		p.points[i].y = c.points[i].y / c.points[i].z * focalLenght;
 	}
 	return p;
 }
