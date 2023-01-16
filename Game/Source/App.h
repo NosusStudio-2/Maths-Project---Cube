@@ -11,6 +11,8 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
+class Maths;
+class ModuleFonts;
 
 class App
 {
@@ -69,6 +71,8 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	Maths* maths;
+	ModuleFonts* fonts;
 
 private:
 

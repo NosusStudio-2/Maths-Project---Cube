@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Eigen/Dense"
 #include "App.h"
+#include "Render.h"
 
 #include "Maths.h"
 
@@ -20,6 +21,69 @@ Maths::~Maths()
 
 }
 
+bool Maths::Start()
+{
+	bool ret = true;
+	MatrixXd newrot(3, 3);
+
+	newrot <<	1, 0, 0,
+				0, 1, 0,
+				0, 0, 1;
+	rotationMatrix = newrot;
+
+
+	return ret;
+}
+
+bool Maths::PreUpdate()
+{
+	bool ret = true;
+
+	//applies current rotation
+	Cube cubeRotated = RotatingCube(cube1, rotationMatrix);
+	//from 3d points to 2d projection
+	projection1 = FromCubeToProjection(cubeRotated);
+
+
+
+	return ret;
+}
+
+bool Maths::Update(float dt)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+bool Maths::PostUpdate()
+{
+	bool ret = true;
+	//print cube's projection
+
+	app->render->DrawLine(projection1.points[0].x, projection1.points[0].y, projection1.points[1].x, projection1.points[1].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[2].x, projection1.points[2].y, projection1.points[1].x, projection1.points[1].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[2].x, projection1.points[2].y, projection1.points[3].x, projection1.points[3].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[0].x, projection1.points[0].y, projection1.points[3].x, projection1.points[3].y, 255, 255, 255);
+
+	app->render->DrawLine(projection1.points[0+4].x, projection1.points[0+4].y, projection1.points[1+4].x, projection1.points[1+4].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[2+4].x, projection1.points[2+4].y, projection1.points[1+4].x, projection1.points[1+4].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[2+4].x, projection1.points[2+4].y, projection1.points[3+4].x, projection1.points[3+4].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[0+4].x, projection1.points[0+4].y, projection1.points[3+4].x, projection1.points[3+4].y, 255, 255, 255);
+
+	app->render->DrawLine(projection1.points[0].x, projection1.points[0].y, projection1.points[4].x, projection1.points[1].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[1].x, projection1.points[1].y, projection1.points[5].x, projection1.points[1].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[2].x, projection1.points[2].y, projection1.points[6].x, projection1.points[3].y, 255, 255, 255);
+	app->render->DrawLine(projection1.points[3].x, projection1.points[3].y, projection1.points[7].x, projection1.points[3].y, 255, 255, 255);
+	return ret;
+}
+
+bool Maths::CleanUp()
+{
+	bool ret = true;
+
+	return ret;
+}
 
 MatrixXd Maths::QuaternionMultiplication(MatrixXd q, MatrixXd p)
 {
@@ -336,4 +400,35 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	}
 	cout << "\n\none of the chars or both are wrong\n\n";
 	return input;
+}
+
+Projection2D Maths::FromCubeToProjection(Cube c)
+{
+	Projection2D p;
+	for (size_t i = 0; i < 8; i++)
+	{
+		p.points[i].x = c.points[i].x / c.points[i].z * focalLenght;
+		p.points[i].y = c.points[i].y / c.points[i].y * focalLenght;
+	}
+	return p;
+}
+
+Cube Maths::RotatingCube(Cube c, MatrixXd r)
+{
+	Cube newc;
+	MatrixXd cubePoint(3,1);
+	for (size_t i = 0; i < 8; i++)
+	{
+		cubePoint <<	newc.points[i].x,
+						newc.points[i].y,
+						newc.points[i].z;
+
+		r * cubePoint;
+
+		newc.points[i].x = cubePoint(0, 0);
+		newc.points[i].y = cubePoint(1, 0);
+		newc.points[i].z = cubePoint(2, 0);
+	}
+
+	return newc;
 }

@@ -2,6 +2,7 @@
 #define __Maths_H__
 
 #include "Module.h"
+#include "Point.h"
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 
@@ -12,9 +13,49 @@ using namespace Eigen;
 #define RADTODEG 57.295779513082320876f
 #define TOLERANCE 10E-4
 
+
+struct Point3D
+{
+	double x, y, z;
+};
+struct Point2D
+{
+	double x, y;
+};
+
+class Cube
+{
+public:
+
+	Point3D points[8];
+};
+class Projection2D
+{
+public:
+	Point2D points[8];
+};
+
+
 class Maths : public Module
 {
 public:
+
+	Maths();
+	~Maths();
+
+	// Called before the first frame
+	bool Start();
+
+	// Called each loop iteration
+	bool PreUpdate();
+
+	bool Update(float dt);
+
+	bool PostUpdate();
+
+	// Called before quitting
+	bool CleanUp();
+
 	//Lab 3 functions
 	MatrixXd QuaternionMultiplication(MatrixXd q, MatrixXd p);
 	MatrixXd VectorRotationUsingQuaternions(MatrixXd v, MatrixXd q);
@@ -29,10 +70,13 @@ public:
 	void RotationVecToEulerAxisAngle(MatrixXd RotationVector, double* u1, double* u2, double* u3, double* angle);
 	MatrixXd RotationChangeOfWritting(MatrixXd input, char from, char to);
 
+	Projection2D FromCubeToProjection(Cube c);
+	Cube RotatingCube(Cube c, MatrixXd r);
 
-
-private:
-
+	MatrixXd rotationMatrix;
+	Cube cube1;
+	Projection2D projection1;
+	double focalLenght;
 };
 
 

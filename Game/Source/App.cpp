@@ -5,6 +5,8 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "Maths.h"
+#include "ModuleFonts.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -23,7 +25,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	scene = new Scene();
-
+	maths = new Maths();
+	fonts = new ModuleFonts();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -31,6 +34,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
+	AddModule(maths);
+	AddModule(fonts);
 
 	// Render last to swap buffer
 	AddModule(render);
