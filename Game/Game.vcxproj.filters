@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Source\Log.cpp">
+      <Filter>Main Program Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Textures.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleFonts.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Defs.h">
+      <Filter>Main Program Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DynArray.h">
+      <Filter>Main Program Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\List.h">
+      <Filter>Main Program Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Log.h">
+      <Filter>Main Program Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Point.h">
+      <Filter>Main Program Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SString.h">
+      <Filter>Main Program Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Queue.h">
+      <Filter>Main Program Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Module.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Render.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Textures.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="External">
+      <UniqueIdentifier>{83a966c7-b4bb-4eff-9c2c-3ff3c7b55a60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Program Files">
+      <UniqueIdentifier>{8080d433-6336-44ca-9f37-7b4f7ab4ea7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Program Files\Utils">
+      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Program Files\Core">
+      <UniqueIdentifier>{4d02a530-3b10-4cc4-b6a7-8e2eae55365b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Program Files\Core\Header">
+      <UniqueIdentifier>{9f7d3340-9ee5-4a56-9f2e-96c5f6435924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Program Files\Core\Source">
+      <UniqueIdentifier>{00368c9b-06c4-402c-bc0e-8a3baf31e006}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
