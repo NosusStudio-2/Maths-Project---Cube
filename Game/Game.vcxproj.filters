@@ -31,6 +31,9 @@
     <ClCompile Include="Source\ModuleFonts.cpp">
       <Filter>Main Program Files\Core\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Maths.cpp">
+      <Filter>Main Program Files\Core\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -79,6 +82,9 @@
       <Filter>Main Program Files\Core\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>Main Program Files\Core\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Maths.h">
       <Filter>Main Program Files\Core\Header</Filter>
     </ClInclude>
   </ItemGroup>
