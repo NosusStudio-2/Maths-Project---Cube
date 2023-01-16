@@ -44,7 +44,7 @@ bool Maths::PreUpdate()
 	//from 3d points to 2d projection
 	projection1 = FromCubeToProjection(cubeRotated);
 
-
+	
 
 	return ret;
 }
@@ -419,9 +419,9 @@ Cube Maths::RotatingCube(Cube c, MatrixXd r)
 	MatrixXd cubePoint(3,1);
 	for (size_t i = 0; i < 8; i++)
 	{
-		cubePoint <<	newc.points[i].x,
-						newc.points[i].y,
-						newc.points[i].z;
+		cubePoint <<	c.points[i].x,
+						c.points[i].y,
+						c.points[i].z;
 
 		r * cubePoint;
 
