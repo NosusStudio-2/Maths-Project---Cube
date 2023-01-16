@@ -38,8 +38,8 @@ bool Window::Awake()
 		bool resizable = false;
 		bool fullscreen_window = false;
 
-		width = 1024; 
-		height = 720; 
+		width = 1600; 
+		height = 900; 
 		scale = 1; 
 
 		if (fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;

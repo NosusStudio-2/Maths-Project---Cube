@@ -41,6 +41,8 @@ bool Scene::Start()
 
 	app->maths->focalLenght = (double)(1 / 34);
 
+	UI = app->tex->Load("Assets/Textures/Maths-Cube_Borders.png");
+
 	return true;
 }
 
@@ -53,9 +55,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-
-
-
+	app->render->DrawTexture(UI, 0, 0);
 
 	//if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 
