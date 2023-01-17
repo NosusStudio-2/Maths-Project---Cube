@@ -30,16 +30,25 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	app->maths->cube1.points[1 - 1] = { 0,0,1 };
-	app->maths->cube1.points[2 - 1] = { 1,0,1 };
-	app->maths->cube1.points[3 - 1] = { 1,0,2 };
-	app->maths->cube1.points[4 - 1] = { 0,0,2 };
-	app->maths->cube1.points[5 - 1] = { 0,1,1 };
-	app->maths->cube1.points[6 - 1] = { 1,1,1 };
-	app->maths->cube1.points[7 - 1] = { 1,1,2 };
-	app->maths->cube1.points[8 - 1] = { 0,1,2 };
+	app->maths->cube1.points[1 - 1] = { 100,100,100 };
+	app->maths->cube1.points[2 - 1] = { 200,100,100 };
+	app->maths->cube1.points[3 - 1] = { 200,200,100 };
+	app->maths->cube1.points[4 - 1] = { 100,200,100 };
 
-	
+	app->maths->cube1.points[5 - 1] = { 100,100,200 };
+	app->maths->cube1.points[6 - 1] = { 200,100,200 };
+	app->maths->cube1.points[7 - 1] = { 200,200,200 };
+	app->maths->cube1.points[8 - 1] = { 100,200,200 };
+	app->maths->rotationPivot = { 0,0,0 };
+	for (size_t i = 0; i < 8; i++)
+	{
+		app->maths->rotationPivot.x += app->maths->cube1.points[i].x;
+		app->maths->rotationPivot.y += app->maths->cube1.points[i].y;
+		app->maths->rotationPivot.z += app->maths->cube1.points[i].z;
+	}
+	app->maths->rotationPivot.x /= 8;
+	app->maths->rotationPivot.y /= 8;
+	app->maths->rotationPivot.z /= 8;
 
 	return true;
 }
@@ -53,39 +62,78 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	app->maths->isCameraRotation = true;
+
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
-		app->maths->angles.x = 45;
+		app->maths->whatisrotating.x = 1;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
 	{
+		app->maths->whatisrotating.x = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		app->maths->whatisrotating.x = -1;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	{
+		app->maths->whatisrotating.x = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		app->maths->whatisrotating.y = 1;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+	{
+		app->maths->whatisrotating.y = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		app->maths->whatisrotating.y = -1;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	{
+		app->maths->whatisrotating.y = 0;
+	}
+
+
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		app->maths->whatisrotating.x = -1;
+		app->maths->isCameraRotation = false;
 
 	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_UP)
 	{
-
+		app->maths->whatisrotating.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
-
+		app->maths->whatisrotating.x = 1;
+		app->maths->isCameraRotation = false;
 	}
-
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
 	{
-		app->maths->angles.y = app->maths->angles.y + 10;
+		app->maths->whatisrotating.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
-		app->maths->angles.y = app->maths->angles.y - 10;
+		app->maths->whatisrotating.y = -1;
+		app->maths->isCameraRotation = false;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
-		app->maths->angles.x = app->maths->angles.x + 10;
+		app->maths->whatisrotating.y = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
-		app->maths->angles.x = app->maths->angles.x - 10;
+		app->maths->whatisrotating.y = 1;
+		app->maths->isCameraRotation = false;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	{
+		app->maths->whatisrotating.y = 0;
 	}
 
 	return true;
