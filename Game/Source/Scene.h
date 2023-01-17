@@ -3,6 +3,62 @@
 
 #include "Module.h"
 
+enum State
+{
+	NORMAL,
+	EDITING,
+	EDITED
+};
+
+enum Button
+{
+	NOBUTTON,
+	PUSH1,
+	PUSH2,
+	PUSH3,
+	PUSH4,
+	QUATERNION1,
+	QUATERNION2,
+	QUATERNION3,
+	QUATERNION4,
+	AXISANGLE1,
+	AXISANGLE2,
+	AXISANGLE3,
+	AXISANGLE4,
+	ROTATIONANGLES1,
+	ROTATIONANGLES2,
+	ROTATIONANGLES3,
+	EULERANGLES1,
+	EULERANGLES2,
+	EULERANGLES3,
+	RESET
+};
+
+enum Keys
+{
+	ENTER,
+	KEY1,
+	KEY2,
+	KEY3,
+	KEY4,
+	KEY5,
+	KEY6,
+	KEY7,
+	KEY8,
+	KEY9,
+	KEY0,
+	KEYDOT,
+	KEYMINUS,
+	KEYDEL,
+	NOKEY
+};
+
+struct UI_Element
+{
+	State state;
+	double element;
+};
+
 struct SDL_Texture;
 
 class Scene : public Module
@@ -32,8 +88,29 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//UI functions
+	Button ButtonDetection();
+	Keys KeyInputs();
+	bool UIelementStateCheck(UI_Element element[], int size);
+	void SetNormal(UI_Element element[], int size);
+	void ApplyImput(UI_Element &element);
+
+	void UI_Update();
+	void PrintUI();
+
 private:
+	State generalState = State::NORMAL;
+	Button button = Button::NOBUTTON;
+	//Keys key = Keys::NOKEY;
+
+	UI_Element quaternion[4];
+	UI_Element eulerAxisAngle[4];
+	UI_Element rotationVector[3];
+	UI_Element eulerAngles[3];
+
 	SDL_Texture* UI;
+
+	uint blinking = 0;
 
 	// Fonts
 	int Cube_font_black = -1;
