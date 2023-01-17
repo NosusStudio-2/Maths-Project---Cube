@@ -191,22 +191,32 @@ MatrixXd Maths::EulerAxisAngleToRotationMat(double u1, double u2, double u3, dou
 	return RotationMatrix;
 }
 
-void Maths::RotationMatToEulerAxisAngle(MatrixXd rotationMatrix, double* u1, double* u2, double* u3, double* angle)
+void Maths::RotationMatToEulerAxisAngle(MatrixXd rotationMatrix, double& u1, double& u2, double& u3, double& angle)
 {
-	//first, find the angle (in radiants)
 	double newAngle = acos((rotationMatrix.trace() - 1) / 2);
-	MatrixXd angleOperationsMat(3, 3);
-	angleOperationsMat << 1 / (2 * sin(newAngle)), 0, 0,
-		0, 1 / (2 * sin(newAngle)), 0,
-		0, 0, 1 / (2 * sin(newAngle));
+	if (sin(newAngle) >= TOLERANCE)
+	{
+		//first, find the angle (in radiants)
+		MatrixXd angleOperationsMat(3, 3);
+		angleOperationsMat << 1 / (2 * sin(newAngle)), 0, 0,
+			0, 1 / (2 * sin(newAngle)), 0,
+			0, 0, 1 / (2 * sin(newAngle));
 
-	rotationMatrix = (rotationMatrix - rotationMatrix.transpose()) * angleOperationsMat;
-	newAngle *= RADTODEG;
+		rotationMatrix = (rotationMatrix - rotationMatrix.transpose()) * angleOperationsMat;
+		newAngle *= RADTODEG;
 
-	*angle = newAngle;
-	*u1 = rotationMatrix(3 - 1, 2 - 1);
-	*u2 = rotationMatrix(1 - 1, 3 - 1);
-	*u3 = rotationMatrix(2 - 1, 1 - 1);
+		angle = newAngle;
+		u1 = rotationMatrix(3 - 1, 2 - 1);
+		u2 = rotationMatrix(1 - 1, 3 - 1);
+		u3 = rotationMatrix(2 - 1, 1 - 1);
+	}
+	else
+	{
+		angle = 0;
+		u1 = 0;
+		u2 = 0;
+		u3 = 0;
+	}
 }
 
 MatrixXd Maths::EulerAnglesToRotationMat(double z, double y, double x) //USES ZYX SYSTEM, ANGLES IN DEGREES
@@ -215,9 +225,27 @@ MatrixXd Maths::EulerAnglesToRotationMat(double z, double y, double x) //USES ZY
 	y *= DEGTORAD;
 	x *= DEGTORAD;
 	MatrixXd rotationMatrix(3, 3);
-	rotationMatrix << cos(y) * cos(z), cos(z)* sin(y)* sin(x) - cos(x) * sin(z), cos(x)* cos(z)* sin(y) + sin(z) * sin(x),
-		cos(y)* sin(z), sin(z)* sin(y)* sin(x) + cos(x) * cos(z), sin(y)* sin(z)* cos(x) - cos(z) * sin(x),
-		-1 * sin(y), cos(y)* sin(x), cos(y)* cos(x);
+	rotationMatrix <<	cos(y) * cos(z), cos(z)* sin(y)* sin(x) - cos(x) * sin(z), cos(x)* cos(z)* sin(y) + sin(z) * sin(x),
+						cos(y)* sin(z), sin(z)* sin(y)* sin(x) + cos(x) * cos(z), sin(y)* sin(z)* cos(x) - cos(z) * sin(x),
+						-1 * sin(y), cos(y)* sin(x), cos(y)* cos(x);
+
+	if (rotationMatrix(2,0) == -0)
+	{
+		rotationMatrix(2, 0) = 0;
+	}
+
+	double rm1 = rotationMatrix(0, 0);
+	double rm2 = rotationMatrix(0, 1);
+	double rm3 = rotationMatrix(0, 2);
+	double rm4 = rotationMatrix(1, 0);
+	double rm5 = rotationMatrix(1, 1);
+	double rm6 = rotationMatrix(1, 2);
+	double rm7 = rotationMatrix(2, 0);
+	double rm8 = rotationMatrix(2, 1);
+	double rm9 = rotationMatrix(2, 2);
+
+
+
 
 	return rotationMatrix;
 }
@@ -255,15 +283,15 @@ MatrixXd Maths::EulerAxisAngleToQuaternion(double u1, double u2, double u3, doub
 	return q;
 }
 
-void Maths::QuaternionToEulerAxisAngle(MatrixXd q, double* u1, double* u2, double* u3, double* angle)
+void Maths::QuaternionToEulerAxisAngle(MatrixXd q, double& u1, double& u2, double& u3, double& angle)
 {
 	double newAngle = 2 * acos(q(4 - 1, 0));
 
 	newAngle *= RADTODEG;
-	*angle = newAngle;
-	*u1 = q(1 - 1, 0) / sqrt(1 - pow(q(4 - 1, 0), 2));
-	*u2 = q(2 - 1, 0) / sqrt(1 - pow(q(4 - 1, 0), 2));
-	*u3 = q(3 - 1, 0) / sqrt(1 - pow(q(4 - 1, 0), 2));
+	angle = newAngle;
+	u1 = q(1 - 1, 0) / sqrt(1 - pow(q(4 - 1, 0), 2));
+	u2 = q(2 - 1, 0) / sqrt(1 - pow(q(4 - 1, 0), 2));
+	u3 = q(3 - 1, 0) / sqrt(1 - pow(q(4 - 1, 0), 2));
 }
 
 MatrixXd Maths::EulerAxisAngleToRotationVec(double u1, double u2, double u3, double angle)
@@ -276,16 +304,16 @@ MatrixXd Maths::EulerAxisAngleToRotationVec(double u1, double u2, double u3, dou
 	return RotationVector;
 }
 
-void Maths::RotationVecToEulerAxisAngle(MatrixXd RotationVector, double* u1, double* u2, double* u3, double* angle)
+void Maths::RotationVecToEulerAxisAngle(MatrixXd RotationVector, double &u1, double &u2, double &u3, double &angle)
 {
 	double newAngle = RotationVector.norm();
 
-	*u1 = RotationVector(1 - 1, 0) / newAngle;
-	*u2 = RotationVector(2 - 1, 0) / newAngle;
-	*u3 = RotationVector(3 - 1, 0) / newAngle;
+	u1 = RotationVector(1 - 1, 0) / newAngle;
+	u2 = RotationVector(2 - 1, 0) / newAngle;
+	u3 = RotationVector(3 - 1, 0) / newAngle;
 
 	newAngle *= RADTODEG;
-	*angle = newAngle;
+	angle = newAngle;
 }
 
 MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
@@ -303,20 +331,20 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	else if (from == 'r' && to == 'p')
 	{
 		MatrixXd output(4, 1);
-		RotationMatToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		RotationMatToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return output;
 	}
 	else if (from == 'r' && to == 'q')
 	{
 		MatrixXd output(4, 1);
-		RotationMatToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		RotationMatToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		output = EulerAxisAngleToQuaternion(output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return output;
 	}
 	else if (from == 'r' && to == 'v')
 	{
 		MatrixXd output(4, 1);
-		RotationMatToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		RotationMatToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		MatrixXd newOutput(3, 1);
 		newOutput = EulerAxisAngleToRotationVec(output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return newOutput;
@@ -332,7 +360,7 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 		MatrixXd output(3, 3);
 		output = EulerAnglesToRotationMat(input(1 - 1, 0), input(2 - 1, 0), input(3 - 1, 0));
 		MatrixXd newOutput(4, 1);
-		RotationMatToEulerAxisAngle(output, &newOutput(1 - 1, 0), &newOutput(2 - 1, 0), &newOutput(3 - 1, 0), &newOutput(4 - 1, 0));
+		RotationMatToEulerAxisAngle(output, newOutput(1 - 1, 0), newOutput(2 - 1, 0), newOutput(3 - 1, 0), newOutput(4 - 1, 0));
 		return newOutput;
 	}
 	else if (from == 'e' && to == 'q')
@@ -340,7 +368,7 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 		MatrixXd output(3, 3);
 		output = EulerAnglesToRotationMat(input(1 - 1, 0), input(2 - 1, 0), input(3 - 1, 0));
 		MatrixXd newOutput(4, 1);
-		RotationMatToEulerAxisAngle(output, &newOutput(1 - 1, 0), &newOutput(2 - 1, 0), &newOutput(3 - 1, 0), &newOutput(4 - 1, 0));
+		RotationMatToEulerAxisAngle(output, newOutput(1 - 1, 0), newOutput(2 - 1, 0), newOutput(3 - 1, 0), newOutput(4 - 1, 0));
 		newOutput = EulerAxisAngleToQuaternion(newOutput(1 - 1, 0), newOutput(2 - 1, 0), newOutput(3 - 1, 0), newOutput(4 - 1, 0));
 		return newOutput;
 	}
@@ -349,7 +377,7 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 		MatrixXd output(3, 3);
 		output = EulerAnglesToRotationMat(input(1 - 1, 0), input(2 - 1, 0), input(3 - 1, 0));
 		MatrixXd newOutput(4, 1);
-		RotationMatToEulerAxisAngle(output, &newOutput(1 - 1, 0), &newOutput(2 - 1, 0), &newOutput(3 - 1, 0), &newOutput(4 - 1, 0));
+		RotationMatToEulerAxisAngle(output, newOutput(1 - 1, 0), newOutput(2 - 1, 0), newOutput(3 - 1, 0), newOutput(4 - 1, 0));
 		MatrixXd newnewOutput(3, 1);
 		newnewOutput = EulerAxisAngleToRotationVec(newOutput(1 - 1, 0), newOutput(2 - 1, 0), newOutput(3 - 1, 0), newOutput(4 - 1, 0));
 		return newnewOutput;
@@ -383,7 +411,7 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	else if (from == 'q' && to == 'r')
 	{
 		MatrixXd output(4, 1);
-		QuaternionToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		QuaternionToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		MatrixXd newOutput(3, 3);
 		newOutput = EulerAxisAngleToRotationMat(output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return newOutput;
@@ -391,7 +419,7 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	else if (from == 'q' && to == 'e')
 	{
 		MatrixXd output(4, 1);
-		QuaternionToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		QuaternionToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		MatrixXd newOutput(3, 3);
 		newOutput = EulerAxisAngleToRotationMat(output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		MatrixXd newnewOutput(3, 1);
@@ -401,13 +429,13 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	else if (from == 'q' && to == 'p')
 	{
 		MatrixXd output(4, 1);
-		QuaternionToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		QuaternionToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return output;
 	}
 	else if (from == 'q' && to == 'v')
 	{
 		MatrixXd output(4, 1);
-		QuaternionToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		QuaternionToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		MatrixXd newOutput(3, 1);
 		newOutput = EulerAxisAngleToRotationVec(output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return newOutput;
@@ -415,7 +443,7 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	else if (from == 'v' && to == 'r')
 	{
 		MatrixXd output(4, 1);
-		RotationVecToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		RotationVecToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		MatrixXd newOutput(3, 3);
 		newOutput = EulerAxisAngleToRotationMat(output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return newOutput;
@@ -423,7 +451,7 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	else if (from == 'v' && to == 'e')
 	{
 		MatrixXd output(4, 1);
-		RotationVecToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		RotationVecToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		MatrixXd newOutput(3, 3);
 		newOutput = EulerAxisAngleToRotationMat(output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		MatrixXd newnewOutput(3, 1);
@@ -433,13 +461,13 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	else if (from == 'v' && to == 'p')
 	{
 		MatrixXd output(4, 1);
-		RotationVecToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		RotationVecToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return output;
 	}
 	else if (from == 'v' && to == 'q')
 	{
 		MatrixXd output(4, 1);
-		RotationVecToEulerAxisAngle(input, &output(1 - 1, 0), &output(2 - 1, 0), &output(3 - 1, 0), &output(4 - 1, 0));
+		RotationVecToEulerAxisAngle(input, output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		output = EulerAxisAngleToQuaternion(output(1 - 1, 0), output(2 - 1, 0), output(3 - 1, 0), output(4 - 1, 0));
 		return output;
 	}

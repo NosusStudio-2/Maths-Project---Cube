@@ -51,13 +51,13 @@ public:
 	MatrixXd VectorRotationUsingQuaternions(MatrixXd v, MatrixXd q);
 	MatrixXd CreateUxfromEulerAxis(double u1, double u2, double u3);
 	MatrixXd EulerAxisAngleToRotationMat(double u1, double u2, double u3, double angle);
-	void RotationMatToEulerAxisAngle(MatrixXd rotationMatrix, double* u1, double* u2, double* u3, double* angle);
+	void RotationMatToEulerAxisAngle(MatrixXd rotationMatrix, double& u1, double& u2, double& u3, double& angle);
 	MatrixXd EulerAnglesToRotationMat(double z, double y, double x);
 	MatrixXd RotationMatToEulerAngles(MatrixXd rotationMatrix);
 	MatrixXd EulerAxisAngleToQuaternion(double u1, double u2, double u3, double angle);
-	void QuaternionToEulerAxisAngle(MatrixXd q, double* u1, double* u2, double* u3, double* angle);
+	void QuaternionToEulerAxisAngle(MatrixXd q, double& u1, double& u2, double& u3, double& angle);
 	MatrixXd EulerAxisAngleToRotationVec(double u1, double u2, double u3, double angle);
-	void RotationVecToEulerAxisAngle(MatrixXd RotationVector, double* u1, double* u2, double* u3, double* angle);
+	void RotationVecToEulerAxisAngle(MatrixXd RotationVector, double& u1, double& u2, double& u3, double& angle);
 	MatrixXd RotationChangeOfWritting(MatrixXd input, char from, char to);
 
 	void Rotate(Point3D *point, double x = 1, double y = 1, double z = 1);
