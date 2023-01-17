@@ -24,12 +24,6 @@ Maths::~Maths()
 bool Maths::Start()
 {
 	bool ret = true;
-	MatrixXd newrot(3, 3);
-
-	newrot <<	1, 0, 0,
-				0, 1, 0,
-				0, 0, 1;
-	rotationMatrix = newrot;
 	
 	angles = { 0,0,0 };
 
@@ -87,6 +81,23 @@ bool Maths::PreUpdate()
 bool Maths::Update(float dt)
 {
 	bool ret = true;
+
+	//remember euler axis angle uses ZYX SYSTEM (and, it will recieve and return the euler angles in the following order -> z,y,x), all angles are in degree!
+	//if you want to recieve, euler axis angle, you will recieve a mat(4,1), where 3 first components are axis, and the 4th the angle(in degree)
+	//use r,e,p,q,v
+
+	MatrixXd newEulerAngles(3, 1);
+	newEulerAngles <<	angles.z,
+						angles.y,
+						angles.x;
+	eulerAngles = newEulerAngles;
+
+	//change of writting
+	rotationMatrix = RotationChangeOfWritting(eulerAngles,'e','r');
+	eulerAxisAngles = RotationChangeOfWritting(eulerAngles, 'e', 'p');
+	quaternion = RotationChangeOfWritting(eulerAngles, 'e', 'q');
+	rotationVector = RotationChangeOfWritting(eulerAngles, 'e', 'v');
+
 
 	return ret;
 }
@@ -438,7 +449,7 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 
 void Maths::Rotate(Point3D *point, double x, double y, double z)
 {
-	double rad = 0;
+	float rad = 0;
 
 	rad = x * DEGTORAD;
 	point->y = cos(rad) * point->y - sin(rad) * point->z;

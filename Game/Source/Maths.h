@@ -16,7 +16,7 @@ using namespace Eigen;
 
 struct Point3D
 {
-	double x, y, z;
+	float x, y, z;
 };
 
 class Cube
@@ -63,6 +63,11 @@ public:
 	void Rotate(Point3D *point, double x = 1, double y = 1, double z = 1);
 
 	MatrixXd rotationMatrix;
+	MatrixXd eulerAngles;
+	MatrixXd eulerAxisAngles;
+	MatrixXd quaternion;
+	MatrixXd rotationVector;
+
 	Cube cube1;
 	Point3D rotationPivot;
 	Point3D angles, whatisrotating;
