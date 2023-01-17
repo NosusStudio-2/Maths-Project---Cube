@@ -18,10 +18,6 @@ struct Point3D
 {
 	double x, y, z;
 };
-struct Point2D
-{
-	double x, y;
-};
 
 class Cube
 {
@@ -29,12 +25,6 @@ public:
 
 	Point3D points[8];
 };
-class Projection2D
-{
-public:
-	Point2D points[8];
-};
-
 
 class Maths : public Module
 {
@@ -70,13 +60,13 @@ public:
 	void RotationVecToEulerAxisAngle(MatrixXd RotationVector, double* u1, double* u2, double* u3, double* angle);
 	MatrixXd RotationChangeOfWritting(MatrixXd input, char from, char to);
 
-	Projection2D FromCubeToProjection(Cube c);
-	Cube RotatingCube(Cube c, MatrixXd r);
+	void Rotate(Point3D *point, double x = 1, double y = 1, double z = 1);
 
 	MatrixXd rotationMatrix;
 	Cube cube1;
-	Projection2D projection1;
-	double focalLenght;
+	Point3D rotationPivot;
+	Point3D angles, whatisrotating;
+	bool isCameraRotation;
 };
 
 
