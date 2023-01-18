@@ -37,15 +37,17 @@ bool Window::Awake()
 		bool borderless = false;
 		bool resizable = false;
 		bool fullscreen_window = false;
+		bool opengl = true;
 
 		width = 1600; 
 		height = 900; 
 		scale = 1; 
 
-		if (fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;
-		if (borderless == true) flags |= SDL_WINDOW_BORDERLESS;
-		if (resizable == true) flags |= SDL_WINDOW_RESIZABLE;
-		if (fullscreen_window == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+		if (fullscreen) flags |= SDL_WINDOW_FULLSCREEN;
+		if (borderless) flags |= SDL_WINDOW_BORDERLESS;
+		if (resizable) flags |= SDL_WINDOW_RESIZABLE;
+		if (fullscreen_window) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+		if (opengl) flags |= SDL_WINDOW_OPENGL;
 
 		window = SDL_CreateWindow(app->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
