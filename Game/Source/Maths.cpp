@@ -64,8 +64,20 @@ bool Maths::PreUpdate()
 
 	for (size_t i = 0; i < 8; i++)
 	{
-		Rotate(&cube1.points[i], whatisrotating.x, whatisrotating.y, whatisrotating.z);
+		if (!edited)
+		{
+			Rotate(cube1.points[i], whatisrotating.x, whatisrotating.y, whatisrotating.z);
+		}
+		else if (edited)
+		{
+			Rotate(cube1.points[i], -angles.x, -angles.y, -angles.z);
+		}
 	}
+	if (edited)
+	{
+		edited = false;
+	}
+
 
 	for (size_t i = 0; i < 8; i++)
 	{
@@ -183,9 +195,9 @@ MatrixXd Maths::EulerAxisAngleToRotationMat(double u1, double u2, double u3, dou
 {
 	MatrixXd RotationMatrix(3, 3);
 	MatrixXd I3(3, 3);
-	I3 << 1, 0, 0,
-		0, 1, 0,
-		0, 0, 1;
+	I3 <<	1, 0, 0,
+			0, 1, 0,
+			0, 0, 1;
 	RotationMatrix = CreateUxfromEulerAxis(u1, u2, u3);//now Rotation matrix is [U]x
 	RotationMatrix = I3 + sin(angle * DEGTORAD) * RotationMatrix + (1 - cos(DEGTORAD * angle)) * (RotationMatrix * RotationMatrix); // apply rodrigues formula
 	return RotationMatrix;
@@ -297,9 +309,9 @@ void Maths::QuaternionToEulerAxisAngle(MatrixXd q, double& u1, double& u2, doubl
 MatrixXd Maths::EulerAxisAngleToRotationVec(double u1, double u2, double u3, double angle)
 {
 	MatrixXd RotationVector(3, 1);
-	RotationVector << u1 * angle * DEGTORAD,
-		u2* angle* DEGTORAD,
-		u3* angle* DEGTORAD;
+	RotationVector <<	u1 * angle * DEGTORAD,
+						u2* angle* DEGTORAD,
+						u3* angle* DEGTORAD;
 
 	return RotationVector;
 }
@@ -475,20 +487,19 @@ MatrixXd Maths::RotationChangeOfWritting(MatrixXd input, char from, char to)
 	return input;
 }
 
-void Maths::Rotate(Point3D *point, double x, double y, double z)
+void Maths::Rotate(Point3D &point, double x, double y, double z)
 {
 	float rad = 0;
 
 	rad = x * DEGTORAD;
-	point->y = cos(rad) * point->y - sin(rad) * point->z;
-	point->z = sin(rad) * point->y + cos(rad) * point->z;
+	point.y = cos(rad) * point.y - sin(rad) * point.z;
+	point.z = sin(rad) * point.y + cos(rad) * point.z;
 
 	rad = y * DEGTORAD;
-	point->x = cos(rad) * point->x + sin(rad) * point->z;
-	point->z = -sin(rad) * point->x + cos(rad) * point->z;
+	point.x = cos(rad) * point.x + sin(rad) * point.z;
+	point.z = -sin(rad) * point.x + cos(rad) * point.z;
 
 	rad = z * DEGTORAD;
-	point->x = cos(rad) * point->x - sin(rad) * point->y;
-	point->y = sin(rad) * point->x + cos(rad) * point->y;
-
+	point.x = cos(rad) * point.x - sin(rad) * point.y;
+	point.y = sin(rad) * point.x + cos(rad) * point.y;
 }

@@ -79,6 +79,18 @@ bool Scene::Start()
 		eulerAngles[i].element = 0;
 		eulerAngles[i].state = State::NORMAL;
 	}
+	for (size_t i = 0; i < 3; i++)
+	{
+		for (size_t j = 0; j < 3; j++)
+		{
+			rotationMatrix[i][j].element = 0;
+			if (i == j)
+			{
+				rotationMatrix[i][j].element = 1;
+			}
+			rotationMatrix[i][j].state = State::NORMAL;
+		}
+	}
 
 	ResetInput();
 
@@ -132,7 +144,7 @@ bool Scene::Update(float dt)
 	}
 
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		app->maths->whatisrotating.x = -1;
 		app->maths->isCameraRotation = false;
@@ -142,7 +154,7 @@ bool Scene::Update(float dt)
 	{
 		app->maths->whatisrotating.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		app->maths->whatisrotating.x = 1;
 		app->maths->isCameraRotation = false;
@@ -151,7 +163,7 @@ bool Scene::Update(float dt)
 	{
 		app->maths->whatisrotating.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		app->maths->whatisrotating.y = -1;
 		app->maths->isCameraRotation = false;
@@ -160,7 +172,7 @@ bool Scene::Update(float dt)
 	{
 		app->maths->whatisrotating.y = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		app->maths->whatisrotating.y = 1;
 		app->maths->isCameraRotation = false;
@@ -546,6 +558,51 @@ Button Scene::ButtonDetection() {
 }
 
 void Scene::UI_Update() {
+
+	//from matrixxd to ui_element
+	if (generalState == State::NORMAL)
+	{
+		for (size_t i = 0; i < 4; i++)
+		{
+			if (quaternion[i].state != State::EDITED)
+			{
+				quaternion[i].element = app->maths->quaternion(i, 0);
+			}
+		}
+		for (size_t i = 0; i < 4; i++)
+		{
+			if (eulerAxisAngle[i].state != State::EDITED)
+			{
+				eulerAxisAngle[i].element = app->maths->eulerAxisAngles(i, 0);
+			}
+		}
+		for (size_t i = 0; i < 3; i++)
+		{
+			if (rotationVector[i].state != State::EDITED)
+			{
+				rotationVector[i].element = app->maths->rotationVector(i, 0);
+			}
+		}
+		for (size_t i = 0; i < 3; i++)
+		{
+			if (eulerAngles[i].state != State::EDITED)
+			{	//3 - i cz euler angles in ui is x,y,z; in MatrixXd is z,y,x
+				eulerAngles[i].element = app->maths->eulerAngles(2 - i, 0);
+			}
+		}
+		for (size_t i = 0; i < 3; i++)
+		{
+			for (size_t j = 0; j < 3; j++)
+			{
+				if (rotationMatrix[i][j].state != State::EDITED)
+				{
+					rotationMatrix[i][j].element = app->maths->rotationMatrix(i, j);
+				}
+			}
+		}
+	}
+
+
 	if (generalState != State::EDITING) { button = ButtonDetection(); }
 
 	switch (button)
@@ -555,6 +612,17 @@ void Scene::UI_Update() {
 	case PUSH1:
 		if (UIelementStateCheck(quaternion, 4)) {
 			//Rotate the cube via quaternion
+			MatrixXd newq(4, 1);
+			newq <<	quaternion[0].element,
+					quaternion[1].element,
+					quaternion[2].element,
+					quaternion[3].element;
+			MatrixXd newea = app->maths->RotationChangeOfWritting(newq, 'q', 'e');
+			app->maths->angles.z = newea(2, 0);
+			app->maths->angles.y = newea(1, 0);
+			app->maths->angles.x = newea(0, 0);
+			app->maths->cube1.Reset();
+			app->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
@@ -565,6 +633,24 @@ void Scene::UI_Update() {
 	case PUSH2:
 		if (UIelementStateCheck(eulerAxisAngle, 4)) {
 			//Rotate the cube via Euler axis-angle
+			VectorXd newnewp(4);
+			newnewp <<	eulerAxisAngle[0].element,
+						eulerAxisAngle[1].element,
+						eulerAxisAngle[2].element,
+						eulerAxisAngle[3].element;
+			newnewp.normalize();
+			MatrixXd newp(4, 1);
+			newp << newnewp(0, 0),
+					newnewp(1, 0),
+					newnewp(2, 0),
+					newnewp(3, 0);
+
+			MatrixXd newea = app->maths->RotationChangeOfWritting(newp, 'p', 'e');
+			app->maths->angles.z = newea(2, 0);
+			app->maths->angles.y = newea(1, 0);
+			app->maths->angles.x = newea(0, 0);
+			app->maths->cube1.Reset();
+			app->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
@@ -575,6 +661,16 @@ void Scene::UI_Update() {
 	case PUSH3:
 		if (UIelementStateCheck(rotationVector, 3)) {
 			//Rotate the cube via Rotation vector
+			MatrixXd newv(3, 1);
+			newv << rotationVector[0].element,
+					rotationVector[1].element,
+					rotationVector[2].element;
+			MatrixXd newea = app->maths->RotationChangeOfWritting(newv, 'v', 'e');
+			app->maths->angles.z = newea(2, 0);
+			app->maths->angles.y = newea(1, 0);
+			app->maths->angles.x = newea(0, 0);
+			app->maths->cube1.Reset();
+			app->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
@@ -585,6 +681,11 @@ void Scene::UI_Update() {
 	case PUSH4:
 		if (UIelementStateCheck(eulerAngles, 3)) {
 			//Rotate the cube via Euler angles
+			app->maths->angles.z = eulerAngles[2].element;
+			app->maths->angles.y = eulerAngles[1].element;
+			app->maths->angles.x = eulerAngles[0].element;
+			app->maths->edited = true;
+			app->maths->cube1.Reset();
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
@@ -1097,7 +1198,7 @@ void Scene::ApplyImput(UI_Element &element) {
 			}
 			break;
 		case KEY9:
-			currentKey = 0;
+			currentKey = 9;
 			if (!decimal) {
 				int power = -1;
 				for (size_t j = i; j < 10; j++)

@@ -24,6 +24,18 @@ class Cube
 public:
 
 	Point3D points[8];
+	void Reset()
+	{
+		points[0] = { 100,100,100 };
+		points[1] = { 200,100,100 };
+		points[2] = { 200,200,100 };
+		points[3] = { 100,200,100 };
+
+		points[4] = { 100,100,200 };
+		points[5] = { 200,100,200 };
+		points[6] = { 200,200,200 };
+		points[7] = { 100,200,200 };
+	}
 };
 
 class Maths : public Module
@@ -60,7 +72,7 @@ public:
 	void RotationVecToEulerAxisAngle(MatrixXd RotationVector, double& u1, double& u2, double& u3, double& angle);
 	MatrixXd RotationChangeOfWritting(MatrixXd input, char from, char to);
 
-	void Rotate(Point3D *point, double x = 1, double y = 1, double z = 1);
+	void Rotate(Point3D &point, double x = 1, double y = 1, double z = 1);
 
 	MatrixXd rotationMatrix;
 	MatrixXd eulerAngles;
@@ -71,6 +83,7 @@ public:
 	Cube cube1;
 	Point3D rotationPivot;
 	Point3D angles, whatisrotating;
+	bool edited = false;
 	bool isCameraRotation;
 };
 

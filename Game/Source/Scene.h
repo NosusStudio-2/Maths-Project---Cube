@@ -110,6 +110,7 @@ private:
 	UI_Element eulerAxisAngle[4];
 	UI_Element rotationVector[3];
 	UI_Element eulerAngles[3];
+	UI_Element rotationMatrix[3][3];
 
 	SDL_Texture* UI;
 
