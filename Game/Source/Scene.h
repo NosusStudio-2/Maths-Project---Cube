@@ -120,33 +120,7 @@ private:
 	int Cube_font_white = -1;
 
 	//UI elements
-	char quaternion1Text[10] = { "\0" };
-	char quaternion2Text[10] = { "\0" };
-	char quaternion3Text[10] = { "\0" };
-	char quaternion4Text[10] = { "\0" };
-
-	char axisAngle1Text[10] = { "\0" };
-	char axisAngle2Text[10] = { "\0" };
-	char axisAngle3Text[10] = { "\0" };
-	char axisAngle4Text[10] = { "\0" };
-
-	char rotationVector1Text[10] = { "\0" };
-	char rotationVector2Text[10] = { "\0" };
-	char rotationVector3Text[10] = { "\0" };
-
-	char eulerAngles1Text[10] = { "\0" };
-	char eulerAngles2Text[10] = { "\0" };
-	char eulerAngles3Text[10] = { "\0" };
-
-	char rotationMatrix1Text[10] = { "\0" };
-	char rotationMatrix2Text[10] = { "\0" };
-	char rotationMatrix3Text[10] = { "\0" };
-	char rotationMatrix4Text[10] = { "\0" };
-	char rotationMatrix5Text[10] = { "\0" };
-	char rotationMatrix6Text[10] = { "\0" };
-	char rotationMatrix7Text[10] = { "\0" };
-	char rotationMatrix8Text[10] = { "\0" };
-	char rotationMatrix9Text[10] = { "\0" };
+	char translationToText[10] = { "\0" };
 };
 
 #endif // __SCENE_H__

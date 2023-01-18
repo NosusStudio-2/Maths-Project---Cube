@@ -204,28 +204,198 @@ void Scene::PrintUI() {
 
 	if (quaternion[0].state != State::EDITING) {
 		float element = (float)quaternion[0].element;
-		snprintf(quaternion1Text, sizeof quaternion1Text, "%f", element);
+		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[0].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_white, quaternion1Text);
+			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else{ app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, quaternion1Text); }
+		else{ app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[0].element;
-		snprintf(quaternion1Text, sizeof quaternion1Text, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, quaternion1Text);
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (quaternion[1].state != State::EDITING) {
 		float element = (float)quaternion[1].element;
-		snprintf(quaternion2Text, sizeof quaternion1Text, "%f", element);
+		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[1].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_white, quaternion2Text);
+			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, quaternion2Text); }
+		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
-		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, quaternion2Text);
+		float element = (float)quaternion[1].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText);
+	}
+
+	if (quaternion[2].state != State::EDITING) {
+		float element = (float)quaternion[2].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (quaternion[2].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)quaternion[2].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText);
+	}
+
+	if (quaternion[3].state != State::EDITING) {
+		float element = (float)quaternion[3].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (quaternion[3].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)quaternion[3].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText);
+	}
+
+	if (eulerAxisAngle[0].state != State::EDITING) {
+		float element = (float)eulerAxisAngle[0].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (eulerAxisAngle[0].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)eulerAxisAngle[0].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText);
+	}
+
+	if (eulerAxisAngle[1].state != State::EDITING) {
+		float element = (float)eulerAxisAngle[1].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (eulerAxisAngle[1].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)eulerAxisAngle[1].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText);
+	}
+
+	if (eulerAxisAngle[2].state != State::EDITING) {
+		float element = (float)eulerAxisAngle[2].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (eulerAxisAngle[2].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)eulerAxisAngle[2].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText);
+	}
+
+	if (eulerAxisAngle[3].state != State::EDITING) {
+		float element = (float)eulerAxisAngle[3].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (eulerAxisAngle[3].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)eulerAxisAngle[3].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText);
+	}
+
+	if (rotationVector[0].state != State::EDITING) {
+		float element = (float)rotationVector[0].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (rotationVector[0].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)rotationVector[0].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText);
+	}
+
+	if (rotationVector[1].state != State::EDITING) {
+		float element = (float)rotationVector[1].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (rotationVector[1].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)rotationVector[1].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText);
+	}
+
+	if (rotationVector[2].state != State::EDITING) {
+		float element = (float)rotationVector[2].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (rotationVector[2].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)rotationVector[2].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText);
+	}
+
+	if (eulerAngles[0].state != State::EDITING) {
+		float element = (float)eulerAngles[0].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (eulerAngles[0].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)eulerAngles[0].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText);
+	}
+
+	if (eulerAngles[1].state != State::EDITING) {
+		float element = (float)eulerAngles[1].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (eulerAngles[1].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)eulerAngles[1].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText);
+	}
+
+	if (eulerAngles[2].state != State::EDITING) {
+		float element = (float)eulerAngles[2].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		if (eulerAngles[2].state == State::NORMAL) {
+			app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_white, translationToText);
+		}
+		else { app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText); }
+	}
+	else if (blinking >= 10) {
+		float element = (float)eulerAngles[2].element;
+		snprintf(translationToText, sizeof translationToText, "%f", element);
+		app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText);
 	}
 
 	if(generalState != State::NORMAL){ blinking++; }
@@ -443,34 +613,184 @@ void Scene::UI_Update() {
 		generalState = State::EDITING;
 		quaternion[1].state = State::EDITING;
 
+		Input();
+		ApplyImput(quaternion[1]);
+
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			quaternion[1].state = State::EDITED;
 		}
 		break;
 	case QUATERNION3:
+		if (quaternion[2].state != State::EDITING) { quaternion[2].element = 0; }
+
+		generalState = State::EDITING;
+		quaternion[2].state = State::EDITING;
+
+		Input();
+		ApplyImput(quaternion[2]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			quaternion[2].state = State::EDITED;
+			ResetInput();
+		}
 		break;
 	case QUATERNION4:
+		if (quaternion[3].state != State::EDITING) { quaternion[3].element = 0; }
+
+		generalState = State::EDITING;
+		quaternion[3].state = State::EDITING;
+
+		Input();
+		ApplyImput(quaternion[3]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			quaternion[3].state = State::EDITED;
+			ResetInput();
+		}
 		break;
 	case AXISANGLE1:
+		if (eulerAxisAngle[0].state != State::EDITING) { eulerAxisAngle[0].element = 0; }
+
+		generalState = State::EDITING;
+		eulerAxisAngle[0].state = State::EDITING;
+
+		Input();
+		ApplyImput(eulerAxisAngle[0]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			eulerAxisAngle[0].state = State::EDITED;
+			ResetInput();
+		}
 		break;
 	case AXISANGLE2:
+		if (eulerAxisAngle[1].state != State::EDITING) { eulerAxisAngle[1].element = 0; }
+
+		generalState = State::EDITING;
+		eulerAxisAngle[1].state = State::EDITING;
+
+		Input();
+		ApplyImput(eulerAxisAngle[1]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			eulerAxisAngle[1].state = State::EDITED;
+		}
 		break;
 	case AXISANGLE3:
+		if (eulerAxisAngle[2].state != State::EDITING) { eulerAxisAngle[2].element = 0; }
+
+		generalState = State::EDITING;
+		eulerAxisAngle[2].state = State::EDITING;
+
+		Input();
+		ApplyImput(eulerAxisAngle[2]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			eulerAxisAngle[2].state = State::EDITED;
+		}
 		break;
 	case AXISANGLE4:
+		if (eulerAxisAngle[3].state != State::EDITING) { eulerAxisAngle[3].element = 0; }
+
+		generalState = State::EDITING;
+		eulerAxisAngle[3].state = State::EDITING;
+
+		Input();
+		ApplyImput(eulerAxisAngle[3]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			eulerAxisAngle[3].state = State::EDITED;
+		}
 		break;
 	case ROTATIONANGLES1:
+		if (rotationVector[0].state != State::EDITING) { rotationVector[0].element = 0; }
+
+		generalState = State::EDITING;
+		rotationVector[0].state = State::EDITING;
+
+		Input();
+		ApplyImput(rotationVector[0]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			rotationVector[0].state = State::EDITED;
+		}
 		break;
 	case ROTATIONANGLES2:
+		if (rotationVector[1].state != State::EDITING) { rotationVector[1].element = 0; }
+
+		generalState = State::EDITING;
+		rotationVector[1].state = State::EDITING;
+
+		Input();
+		ApplyImput(rotationVector[1]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			rotationVector[1].state = State::EDITED;
+		}
 		break;
 	case ROTATIONANGLES3:
+		if (rotationVector[2].state != State::EDITING) { rotationVector[2].element = 0; }
+
+		generalState = State::EDITING;
+		rotationVector[2].state = State::EDITING;
+
+		Input();
+		ApplyImput(rotationVector[2]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			rotationVector[2].state = State::EDITED;
+		}
 		break;
 	case EULERANGLES1:
+		if (eulerAngles[0].state != State::EDITING) { eulerAngles[0].element = 0; }
+
+		generalState = State::EDITING;
+		eulerAngles[0].state = State::EDITING;
+
+		Input();
+		ApplyImput(eulerAngles[0]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			eulerAngles[0].state = State::EDITED;
+		}
 		break;
 	case EULERANGLES2:
+		if (eulerAngles[1].state != State::EDITING) { eulerAngles[1].element = 0; }
+
+		generalState = State::EDITING;
+		eulerAngles[1].state = State::EDITING;
+
+		Input();
+		ApplyImput(eulerAngles[1]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			eulerAngles[1].state = State::EDITED;
+		}
 		break;
 	case EULERANGLES3:
+		if (eulerAngles[2].state != State::EDITING) { eulerAngles[2].element = 0; }
+
+		generalState = State::EDITING;
+		eulerAngles[2].state = State::EDITING;
+
+		Input();
+		ApplyImput(eulerAngles[2]);
+
+		if (KeyInputs() == Keys::ENTER) {
+			generalState = State::NORMAL;
+			eulerAngles[2].state = State::EDITED;
+		}
 		break;
 	case RESET:
 		break;
