@@ -55,7 +55,7 @@ bool Scene::Start()
 
 	UI = app->tex->Load("Assets/Textures/Maths-Cube_Borders.png");
 
-	char lookupTable[] = { "abcdefghijklmnopqrstuvwxyz 0123456789.,;:$#'! /?%&()@ " };
+	char lookupTable[] = { "abcdefghijklmnopqrstuvwxyz-0123456789.,;:$#'! /?%&()@ " };
 	Cube_font_black = app->fonts->Load("Assets/Fonts/sprite_font_black.png", lookupTable, 6);
 	Cube_font_white = app->fonts->Load("Assets/Fonts/sprite_font_white.png", lookupTable, 6);
 
@@ -492,7 +492,7 @@ Keys Scene::KeyInputs() {
 	{
 		return Keys::KEYDOT;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_MINUS) == KEY_DOWN)
+	else if (app->input->GetKey(SDL_SCANCODE_SLASH) == KEY_DOWN)
 	{
 		return Keys::KEYMINUS;
 	}
