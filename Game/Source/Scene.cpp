@@ -10,6 +10,8 @@
 #include "Log.h"
 #include "ModuleFonts.h"
 
+#include <math.h>
+
 Scene::Scene() : Module()
 {
 	
@@ -77,6 +79,8 @@ bool Scene::Start()
 		eulerAngles[i].element = 0;
 		eulerAngles[i].state = State::NORMAL;
 	}
+
+	ResetInput();
 
 	return true;
 }
@@ -424,11 +428,13 @@ void Scene::UI_Update() {
 		generalState = State::EDITING;
 		quaternion[0].state = State::EDITING;
 
+		Input();
 		ApplyImput(quaternion[0]);
 
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			quaternion[0].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case QUATERNION2:
@@ -552,6 +558,273 @@ void Scene::SetNormal(UI_Element element[], int size) {
 }
 
 void Scene::ApplyImput(UI_Element &element) {
+	float aux = 0;
+	bool negative = false;
+	bool decimal = false;
+	bool noImput = false;
+	int currentKey = 0;
+
+	if (KeyInputs() == Keys::NOKEY) { noImput = true; }
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		Keys key = input[i];
+
+		switch (key)
+		{
+		case ENTER:
+			break;
+		case KEY1:
+			currentKey = 1;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY2:
+			currentKey = 2;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY3:
+			currentKey = 3;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY4:
+			currentKey = 4;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY5:
+			currentKey = 5;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY6:
+			currentKey = 6;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY7:
+			currentKey = 7;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY8:
+			currentKey = 8;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY9:
+			currentKey = 0;
+			if (!decimal) {
+				int power = -1;
+				for (size_t j = i; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT || input[j] == Keys::NOKEY) { break; }
+					power++;
+				}
+				aux += (currentKey * (pow(10, power)));
+			}
+			else {
+				int power = 0;
+				bool dec = false;
+				for (size_t j = 0; j < 10; j++)
+				{
+					if (input[j] == Keys::KEYDOT) {
+						power = i - j;
+						break;
+					}
+				}
+				aux += (currentKey / (pow(10, power)));
+			}
+			break;
+		case KEY0:
+			
+			break;
+		case KEYDOT:
+			decimal = true;
+			break;
+		case KEYMINUS:
+			negative = true;
+			break;
+		case KEYDEL:
+
+			break;
+		case NOKEY:
+			break;
+		default:
+			break;
+		}
+	}
+
+	if (negative) { aux *= -1; }
+
+	if (!noImput) {
+		element.element = aux;
+	}
+}
+
+void Scene::ResetInput() {
+	for (size_t i = 0; i < 10; i++)
+	{
+		input[i] = Keys::NOKEY;
+	}
+	cursor = 0;
+}
+
+void Scene::Input() {
 	Keys key = KeyInputs();
 
 	switch (key)
@@ -559,55 +832,89 @@ void Scene::ApplyImput(UI_Element &element) {
 	case ENTER:
 		break;
 	case KEY1:
-		element.element *= 10;
-		element.element += 1;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY1;
+			cursor++;
+		}
 		break;
 	case KEY2:
-		element.element *= 10;
-		element.element += 2;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY2;
+			cursor++;
+		}
 		break;
 	case KEY3:
-		element.element *= 10;
-		element.element += 3;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY3;
+			cursor++;
+		}
 		break;
 	case KEY4:
-		element.element *= 10;
-		element.element += 4;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY4;
+			cursor++;
+		}
 		break;
 	case KEY5:
-		element.element *= 10;
-		element.element += 5;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY5;
+			cursor++;
+		}
 		break;
 	case KEY6:
-		element.element *= 10;
-		element.element += 6;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY6;
+			cursor++;
+		}
 		break;
 	case KEY7:
-		element.element *= 10;
-		element.element += 7;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY7;
+			cursor++;
+		}
 		break;
 	case KEY8:
-		element.element *= 10;
-		element.element += 8;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY8;
+			cursor++;
+		}
 		break;
 	case KEY9:
-		element.element *= 10;
-		element.element += 9;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY9;
+			cursor++;
+		}
 		break;
 	case KEY0:
-		element.element *= 10;
+		if (cursor < 10) {
+			input[cursor] = Keys::KEY0;
+			cursor++;
+		}
 		break;
 	case KEYDOT:
+		if (cursor < 10) {
+			input[cursor] = Keys::KEYDOT;
+			cursor++;
+		}
 		break;
 	case KEYMINUS:
+		if (cursor == 0) {
+			input[cursor] = Keys::KEYMINUS;
+			cursor++;
+		}
 		break;
 	case KEYDEL:
+		if (cursor > 0) {
+			cursor--;
+			input[cursor] = Keys::NOKEY;
+		}
+		else {
+			input[cursor] = Keys::KEY0;
+		}
 		break;
 	case NOKEY:
 		break;
 	default:
 		break;
 	}
-
-
 }

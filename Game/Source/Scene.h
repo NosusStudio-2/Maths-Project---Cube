@@ -93,7 +93,9 @@ public:
 	Keys KeyInputs();
 	bool UIelementStateCheck(UI_Element element[], int size);
 	void SetNormal(UI_Element element[], int size);
+	void Input();
 	void ApplyImput(UI_Element &element);
+	void ResetInput();
 
 	void UI_Update();
 	void PrintUI();
@@ -101,7 +103,8 @@ public:
 private:
 	State generalState = State::NORMAL;
 	Button button = Button::NOBUTTON;
-	//Keys key = Keys::NOKEY;
+	Keys input[10];
+	int cursor = 0;
 
 	UI_Element quaternion[4];
 	UI_Element eulerAxisAngle[4];
