@@ -619,6 +619,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			quaternion[1].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case QUATERNION3:
@@ -678,6 +679,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			eulerAxisAngle[1].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case AXISANGLE3:
@@ -692,6 +694,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			eulerAxisAngle[2].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case AXISANGLE4:
@@ -706,6 +709,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			eulerAxisAngle[3].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case ROTATIONANGLES1:
@@ -720,6 +724,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			rotationVector[0].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case ROTATIONANGLES2:
@@ -734,6 +739,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			rotationVector[1].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case ROTATIONANGLES3:
@@ -748,6 +754,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			rotationVector[2].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case EULERANGLES1:
@@ -762,6 +769,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			eulerAngles[0].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case EULERANGLES2:
@@ -776,6 +784,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			eulerAngles[1].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case EULERANGLES3:
@@ -790,6 +799,7 @@ void Scene::UI_Update() {
 		if (KeyInputs() == Keys::ENTER) {
 			generalState = State::NORMAL;
 			eulerAngles[2].state = State::EDITED;
+			ResetInput();
 		}
 		break;
 	case RESET:
