@@ -44,9 +44,9 @@ bool Scene::Start()
 	App->maths->rotationPivot = { 0,0,0 };
 	for (size_t i = 0; i < 8; i++)
 	{
-		App->maths->rotationPivot.x += app->maths->cube1.points[i].x;
-		App->maths->rotationPivot.y += app->maths->cube1.points[i].y;
-		App->maths->rotationPivot.z += app->maths->cube1.points[i].z;
+		App->maths->rotationPivot.x += App->maths->cube1.points[i].x;
+		App->maths->rotationPivot.y += App->maths->cube1.points[i].y;
+		App->maths->rotationPivot.z += App->maths->cube1.points[i].z;
 	}
 	App->maths->rotationPivot.x /= 8;
 	App->maths->rotationPivot.y /= 8;
@@ -103,7 +103,7 @@ bool Scene::PreUpdate()
 }
 
 // Called each loop iteration
-bool Scene::Update(float dt)
+update_status Scene::Update(float dt)
 {
 	UI_Update();
 
@@ -181,7 +181,7 @@ bool Scene::Update(float dt)
 		App->maths->whatisrotating.y = 0;
 	}
 
-	return true;
+	return update_status::UPDATE_CONTINUE;
 }
 
 // Called each loop iteration
@@ -617,11 +617,11 @@ void Scene::UI_Update() {
 					quaternion[2].element,
 					quaternion[3].element;
 			MatrixXd newea = App->maths->RotationChangeOfWritting(newq, 'q', 'e');
-			app->maths->angles.z = newea(2, 0);
-			app->maths->angles.y = newea(1, 0);
-			app->maths->angles.x = newea(0, 0);
-			app->maths->cube1.Reset();
-			app->maths->edited = true;
+			App->maths->angles.z = newea(2, 0);
+			App->maths->angles.y = newea(1, 0);
+			App->maths->angles.x = newea(0, 0);
+			App->maths->cube1.Reset();
+			App->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
@@ -645,11 +645,11 @@ void Scene::UI_Update() {
 					newnewp(3, 0);
 
 			MatrixXd newea = App->maths->RotationChangeOfWritting(newp, 'p', 'e');
-			app->maths->angles.z = newea(2, 0);
-			app->maths->angles.y = newea(1, 0);
-			app->maths->angles.x = newea(0, 0);
-			app->maths->cube1.Reset();
-			app->maths->edited = true;
+			App->maths->angles.z = newea(2, 0);
+			App->maths->angles.y = newea(1, 0);
+			App->maths->angles.x = newea(0, 0);
+			App->maths->cube1.Reset();
+			App->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
@@ -665,11 +665,11 @@ void Scene::UI_Update() {
 					rotationVector[1].element,
 					rotationVector[2].element;
 			MatrixXd newea = App->maths->RotationChangeOfWritting(newv, 'v', 'e');
-			app->maths->angles.z = newea(2, 0);
-			app->maths->angles.y = newea(1, 0);
-			app->maths->angles.x = newea(0, 0);
-			app->maths->cube1.Reset();
-			app->maths->edited = true;
+			App->maths->angles.z = newea(2, 0);
+			App->maths->angles.y = newea(1, 0);
+			App->maths->angles.x = newea(0, 0);
+			App->maths->cube1.Reset();
+			App->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
