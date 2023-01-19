@@ -18,7 +18,7 @@ Render::~Render()
 {}
 
 // Called before render is available
-bool Render::Awake()
+bool Render::Init()
 {
 	LOG("Create SDL rendering context");
 	bool ret = true;
@@ -57,10 +57,10 @@ bool Render::Start()
 }
 
 // Called each loop iteration
-bool Render::PreUpdate()
+update_status Render::PreUpdate(float dt)
 {
 	SDL_RenderClear(renderer);
-	return true;
+	return update_status::UPDATE_CONTINUE;
 }
 
 update_status Render::Update(float dt)
@@ -70,11 +70,11 @@ update_status Render::Update(float dt)
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool Render::PostUpdate()
+update_status Render::PostUpdate(float dt)
 {
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
-	return true;
+	return update_status::UPDATE_CONTINUE;
 }
 
 // Called before quitting

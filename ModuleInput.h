@@ -36,7 +36,7 @@ public:
 
 	KEY_STATE GetMouseButtonDown(int id) const
 	{
-		return mouse_buttons[id - 1];
+		return mouse_buttons[id];
 	}
 
 	int GetMouseX() const

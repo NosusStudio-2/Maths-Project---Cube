@@ -17,7 +17,7 @@ Textures::~Textures()
 {}
 
 // Called before render is available
-bool Textures::Awake()
+bool Textures::Init()
 {
 	LOG("Init Image library");
 	bool ret = true;

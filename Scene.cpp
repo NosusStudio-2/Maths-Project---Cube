@@ -22,15 +22,6 @@ Scene::Scene() : Module()
 Scene::~Scene()
 {}
 
-// Called before render is available
-bool Scene::Awake()
-{
-	LOG("Loading Scene");
-	bool ret = true;
-
-	return ret;
-}
-
 // Called before the first frame
 bool Scene::Start()
 {
@@ -54,7 +45,7 @@ bool Scene::Start()
 	App->maths->rotationPivot.y /= 8;
 	App->maths->rotationPivot.z /= 8;
 
-	UI = App->tex->Load("Assets/Textures/Maths-Cube_Borders.png");
+	UI = App->tex->Load("Assets/Textures/UI_window_text.png");
 
 	char lookupTable[] = { "abcdefghijklmnopqrstuvwxyz-0123456789.,;:$#'! /?%&()@ " };
 	Cube_font_black = App->fonts->Load("Assets/Fonts/sprite_font_black.png", lookupTable, 6);
@@ -183,18 +174,16 @@ update_status Scene::Update(float dt)
 }
 
 // Called each loop iteration
-bool Scene::PostUpdate()
+update_status Scene::PostUpdate(float dt)
 {
-	bool ret = true;
-
 	App->render->DrawTexture(UI, 0, 0);
 
 	PrintUI();
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+		return update_status::UPDATE_STOP;
 
-	return ret;
+	return update_status::UPDATE_CONTINUE;
 }
 
 // Called before quitting
@@ -215,197 +204,233 @@ void Scene::PrintUI() {
 		float element = (float)quaternion[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[0].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else{ App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText); }
+		else{ App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (quaternion[1].state != State::EDITING) {
 		float element = (float)quaternion[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[1].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (quaternion[2].state != State::EDITING) {
 		float element = (float)quaternion[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[2].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (quaternion[3].state != State::EDITING) {
 		float element = (float)quaternion[3].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[3].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 3), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[3].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (eulerAxisAngle[0].state != State::EDITING) {
 		float element = (float)eulerAxisAngle[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAxisAngle[0].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 1), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAxisAngle[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText);
 	}
 
 	if (eulerAxisAngle[1].state != State::EDITING) {
 		float element = (float)eulerAxisAngle[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAxisAngle[1].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 1), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAxisAngle[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText);
 	}
 
 	if (eulerAxisAngle[2].state != State::EDITING) {
 		float element = (float)eulerAxisAngle[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAxisAngle[2].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 1), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAxisAngle[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText);
 	}
 
 	if (eulerAxisAngle[3].state != State::EDITING) {
 		float element = (float)eulerAxisAngle[3].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAxisAngle[3].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 3), 275 + (108 * 1), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAxisAngle[3].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText);
 	}
 
 	if (rotationVector[0].state != State::EDITING) {
 		float element = (float)rotationVector[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (rotationVector[0].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 2), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)rotationVector[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText);
 	}
 
 	if (rotationVector[1].state != State::EDITING) {
 		float element = (float)rotationVector[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (rotationVector[1].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 2), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)rotationVector[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText);
 	}
 
 	if (rotationVector[2].state != State::EDITING) {
 		float element = (float)rotationVector[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (rotationVector[2].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 2), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)rotationVector[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText);
 	}
 
 	if (eulerAngles[0].state != State::EDITING) {
 		float element = (float)eulerAngles[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAngles[0].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 3), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAngles[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText);
 	}
 
 	if (eulerAngles[1].state != State::EDITING) {
 		float element = (float)eulerAngles[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAngles[1].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 3), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAngles[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText);
 	}
 
 	if (eulerAngles[2].state != State::EDITING) {
 		float element = (float)eulerAngles[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAngles[2].state == State::NORMAL) {
-			App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_white, translationToText);
+			App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 3), Cube_font_white, translationToText);
 		}
-		else { App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAngles[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText);
+		App->fonts->BlitText((1023 - 879) + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText);
 	}
+
+	float element = (float)rotationMatrix[0][0].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 0), 373 + 38 + (108 * 3), Cube_font_white, translationToText);
+
+	element = (float)rotationMatrix[0][1].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 1), 373 + 38 + (108 * 3), Cube_font_white, translationToText);
+
+	element = (float)rotationMatrix[0][2].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 2), 373 + 38 + (108 * 3), Cube_font_white, translationToText);
+
+	element = (float)rotationMatrix[1][0].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 0), 383 + 10 + (38 * 2) + (108 * 3), Cube_font_white, translationToText);
+
+	element = (float)rotationMatrix[1][1].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 1), 383 + 10 + (38 * 2) + (108 * 3), Cube_font_white, translationToText);
+
+	element = (float)rotationMatrix[1][2].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 2), 383 + 10 + (38 * 2) + (108 * 3), Cube_font_white, translationToText);
+
+	element = (float)rotationMatrix[2][0].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 0), 393 + 10 + (38 * 3) + (108 * 3), Cube_font_white, translationToText);
+
+	element = (float)rotationMatrix[2][1].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 1), 393 + 10 + (38 * 3) + (108 * 3), Cube_font_white, translationToText);
+
+	element = (float)rotationMatrix[2][2].element;
+	snprintf(translationToText, sizeof translationToText, "%f", element);
+	App->fonts->BlitText((1023 - 879) + (143 * 2), 393 + 10 + (38 * 3) + (108 * 3), Cube_font_white, translationToText);
 
 	if(generalState != State::NORMAL){ blinking++; }
 	else { blinking = 0; }
@@ -417,137 +442,137 @@ Button Scene::ButtonDetection() {
 	Button buttonDetected;
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	App->input->GetMouseX() > 900 &&
-	App->input->GetMouseX() < 991 &&
-	App->input->GetMouseY() > (260 + (109 * 0)) &&
-	App->input->GetMouseY() < (300 + (109 * 0))) {
+		App->input->GetMouseX() > (900 - 879) &&
+		App->input->GetMouseX() < (991 - 879) &&
+		App->input->GetMouseY() > (260 + (109 * 0)) &&
+		App->input->GetMouseY() < (300 + (109 * 0))) {
 		buttonDetected = Button::PUSH1;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > 900 &&
-		App->input->GetMouseX() < 991 &&
+		App->input->GetMouseX() > (900 - 879) &&
+		App->input->GetMouseX() < (991 - 879) &&
 		App->input->GetMouseY() > (260 + (109 * 1)) &&
 		App->input->GetMouseY() < (300 + (109 * 1))) {
 		buttonDetected = Button::PUSH2;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > 900 &&
-		App->input->GetMouseX() < 991 &&
+		App->input->GetMouseX() > (900 - 879) &&
+		App->input->GetMouseX() < (991 - 879) &&
 		App->input->GetMouseY() > (260 + (109 * 2)) &&
 		App->input->GetMouseY() < (300 + (109 * 2))) {
 		buttonDetected = Button::PUSH3;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > 900 &&
-		App->input->GetMouseX() < 991 &&
+		App->input->GetMouseX() > (900 - 879) &&
+		App->input->GetMouseX() < (991 - 879) &&
 		App->input->GetMouseY() > (260 + (109 * 3)) &&
 		App->input->GetMouseY() < (300 + (109 * 3))) {
 		buttonDetected = Button::PUSH4;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 0)) &&
-		App->input->GetMouseX() < (1132 + (143 * 0)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 0)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 0)) &&
 		App->input->GetMouseY() > (261 + (108 * 0)) &&
 		App->input->GetMouseY() < (299 + (108 * 0))) {
 		buttonDetected = Button::QUATERNION1;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 1)) &&
-		App->input->GetMouseX() < (1132 + (143 * 1)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 1)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 1)) &&
 		App->input->GetMouseY() > (261 + (108 * 0)) &&
 		App->input->GetMouseY() < (299 + (108 * 0))) {
 		buttonDetected = Button::QUATERNION2;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 2)) &&
-		App->input->GetMouseX() < (1132 + (143 * 2)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 2)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 2)) &&
 		App->input->GetMouseY() > (261 + (108 * 0)) &&
 		App->input->GetMouseY() < (299 + (108 * 0))) {
 		buttonDetected = Button::QUATERNION3;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 3)) &&
-		App->input->GetMouseX() < (1132 + (143 * 3)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 3)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 3)) &&
 		App->input->GetMouseY() > (261 + (108 * 0)) &&
 		App->input->GetMouseY() < (299 + (108 * 0))) {
 		buttonDetected = Button::QUATERNION4;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 0)) &&
-		App->input->GetMouseX() < (1132 + (143 * 0)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 0)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 0)) &&
 		App->input->GetMouseY() > (261 + (108 * 1)) &&
 		App->input->GetMouseY() < (299 + (108 * 1))) {
 		buttonDetected = Button::AXISANGLE1;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 1)) &&
-		App->input->GetMouseX() < (1132 + (143 * 1)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 1)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 1)) &&
 		App->input->GetMouseY() > (261 + (108 * 1)) &&
 		App->input->GetMouseY() < (299 + (108 * 1))) {
 		buttonDetected = Button::AXISANGLE2;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 2)) &&
-		App->input->GetMouseX() < (1132 + (143 * 2)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 2)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 2)) &&
 		App->input->GetMouseY() > (261 + (108 * 1)) &&
 		App->input->GetMouseY() < (299 + (108 * 1))) {
 		buttonDetected = Button::AXISANGLE3;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 3)) &&
-		App->input->GetMouseX() < (1132 + (143 * 3)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 3)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 3)) &&
 		App->input->GetMouseY() > (261 + (108 * 1)) &&
 		App->input->GetMouseY() < (299 + (108 * 1))) {
 		buttonDetected = Button::AXISANGLE4;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 0)) &&
-		App->input->GetMouseX() < (1132 + (143 * 0)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 0)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 0)) &&
 		App->input->GetMouseY() > (261 + (108 * 2)) &&
 		App->input->GetMouseY() < (299 + (108 * 2))) {
 		buttonDetected = Button::ROTATIONANGLES1;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 1)) &&
-		App->input->GetMouseX() < (1132 + (143 * 1)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 1)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 1)) &&
 		App->input->GetMouseY() > (261 + (108 * 2)) &&
 		App->input->GetMouseY() < (299 + (108 * 2))) {
 		buttonDetected = Button::ROTATIONANGLES2;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		App->input->GetMouseX() > (1005 + (143 * 2)) &&
-		App->input->GetMouseX() < (1132 + (143 * 2)) &&
+		App->input->GetMouseX() > (1005 - 879 + (143 * 2)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 2)) &&
 		App->input->GetMouseY() > (261 + (108 * 2)) &&
 		App->input->GetMouseY() < (299 + (108 * 2))) {
 		buttonDetected = Button::ROTATIONANGLES3;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	App->input->GetMouseX() > (1005 + (143 * 0)) &&
-	App->input->GetMouseX() < (1132 + (143 * 0)) &&
-	App->input->GetMouseY() > (261 + (108 * 3)) &&
-	App->input->GetMouseY() < (299 + (108 * 3))) {
-	buttonDetected = Button::EULERANGLES1;
+		App->input->GetMouseX() > (1005 - 879 + (143 * 0)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 0)) &&
+		App->input->GetMouseY() > (261 + (108 * 3)) &&
+		App->input->GetMouseY() < (299 + (108 * 3))) {
+		buttonDetected = Button::EULERANGLES1;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	App->input->GetMouseX() > (1005 + (143 * 1)) &&
-	App->input->GetMouseX() < (1132 + (143 * 1)) &&
-	App->input->GetMouseY() > (261 + (108 * 3)) &&
-	App->input->GetMouseY() < (299 + (108 * 3))) {
-	buttonDetected = Button::EULERANGLES2;
+		App->input->GetMouseX() > (1005 - 879 + (143 * 1)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 1)) &&
+		App->input->GetMouseY() > (261 + (108 * 3)) &&
+		App->input->GetMouseY() < (299 + (108 * 3))) {
+		buttonDetected = Button::EULERANGLES2;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	App->input->GetMouseX() > (1005 + (143 * 2)) &&
-	App->input->GetMouseX() < (1132 + (143 * 2)) &&
-	App->input->GetMouseY() > (261 + (108 * 3)) &&
-	App->input->GetMouseY() < (299 + (108 * 3))) {
-	buttonDetected = Button::EULERANGLES3;
+		App->input->GetMouseX() > (1005 - 879 + (143 * 2)) &&
+		App->input->GetMouseX() < (1132 - 879 + (143 * 2)) &&
+		App->input->GetMouseY() > (261 + (108 * 3)) &&
+		App->input->GetMouseY() < (299 + (108 * 3))) {
+		buttonDetected = Button::EULERANGLES3;
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	App->input->GetMouseX() > (1470) &&
-	App->input->GetMouseX() < (1546) &&
-	App->input->GetMouseY() > (775) &&
-	App->input->GetMouseY() < (815)) {
-	buttonDetected = Button::RESET;
+		App->input->GetMouseX() > (1470 - 879) &&
+		App->input->GetMouseX() < (1546 - 879) &&
+		App->input->GetMouseY() > (775) &&
+		App->input->GetMouseY() < (815)) {
+		buttonDetected = Button::RESET;
 	}
 	else { buttonDetected = Button::NOBUTTON; }
 
@@ -601,6 +626,9 @@ void Scene::UI_Update() {
 
 
 	if (generalState != State::EDITING) { button = ButtonDetection(); }
+
+	MatrixXd p(4, 1);
+	MatrixXd e;
 
 	switch (button)
 	{
@@ -909,6 +937,13 @@ void Scene::UI_Update() {
 		}
 		break;
 	case RESET:
+		p << 1, 1, 1, 0;
+		e = App->maths->RotationChangeOfWritting(p, 'p', 'e');
+		App->maths->angles.z = e(0, 0);
+		App->maths->angles.y = e(1, 0);
+		App->maths->angles.x = e(2, 0);
+		App->scene_intro->primitives[0]->SetRotation(0, { 1, 1, 1 });
+		App->scene_intro->primitives[0]->SetPos(0, 0, 0);
 		break;
 	default:
 		break;

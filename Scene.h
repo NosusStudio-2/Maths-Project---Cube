@@ -70,9 +70,6 @@ public:
 	// Destructor
 	virtual ~Scene();
 
-	// Called before render is available
-	bool Awake();
-
 	// Called before the first frame
 	bool Start();
 
@@ -83,7 +80,7 @@ public:
 	update_status Update(float dt);
 
 	// Called before all Updates
-	bool PostUpdate();
+	update_status PostUpdate(float dt);
 
 	// Called before quitting
 	bool CleanUp();

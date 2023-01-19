@@ -17,15 +17,15 @@ public:
 	virtual ~Render();
 
 	// Called before render is available
-	bool Awake();
+	bool Init();
 
 	// Called before the first frame
 	bool Start();
 
 	// Called each loop iteration
-	bool PreUpdate();
+	update_status PreUpdate(float dt);
 	update_status Update(float dt);
-	bool PostUpdate();
+	update_status PostUpdate(float dt);
 
 	// Called before quitting
 	bool CleanUp();
