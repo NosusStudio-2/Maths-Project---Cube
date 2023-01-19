@@ -17,11 +17,13 @@
 #include "Render.h"
 #include "ModuleFonts.h"
 #include "Textures.h"
+#include "Window.h"
 
 class Application
 {
 public:
-	ModuleWindow* window;
+	ModuleWindow* window3D;
+	Window* window2D;
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModuleSceneIntro* scene_intro;

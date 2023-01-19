@@ -29,7 +29,7 @@ bool Render::Awake()
 	flags |= SDL_RENDERER_PRESENTVSYNC;
 	LOG("Using vsync");
 
-	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
+	renderer = SDL_CreateRenderer(App->window2D->window, -1, flags);
 
 	if(renderer == NULL)
 	{
@@ -38,8 +38,8 @@ bool Render::Awake()
 	}
 	else
 	{
-		camera.w = App->window->Width();
-		camera.h = App->window->Height();
+		camera.w = App->window2D->getWidth();
+		camera.h = App->window2D->getHeight();
 		camera.x = 0;
 		camera.y = 0;
 	}

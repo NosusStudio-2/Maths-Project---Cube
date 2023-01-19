@@ -74,8 +74,8 @@ void ModuleSceneIntro::HandleDebugInput()
 
 
 		//Get a vector indicating the direction from the camera viewpoint to the "mouse"
-		const vec2 mousePos(((float)App->input->GetMouseX() / (float)App->window->Width()) * 2.f - 1.f,
-			-((float)App->input->GetMouseY() / (float)App->window->Height()) * 2.f + 1.f);
+		const vec2 mousePos(((float)App->input->GetMouseX() / (float)App->window3D->Width()) * 2.f - 1.f,
+			-((float)App->input->GetMouseY() / (float)App->window3D->Height()) * 2.f + 1.f);
 		const vec4 rayEye = inverse(App->renderer3D->ProjectionMatrix) * vec4(mousePos.x, mousePos.y, -1.f, 1.f);
 		const vec4 rayWorld(inverse(App->camera->GetViewMatrix()) * vec4(rayEye.x, rayEye.y, -1.f, 0.f));
 

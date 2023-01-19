@@ -23,7 +23,7 @@ bool ModuleRenderer3D::Init()
 	bool ret = true;
 	
 	//Create context
-	context = SDL_GL_CreateContext(App->window->window);
+	context = SDL_GL_CreateContext(App->window3D->window);
 	if(context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -124,7 +124,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	SDL_GL_SwapWindow(App->window->window);
+	SDL_GL_SwapWindow(App->window3D->window);
 	return UPDATE_CONTINUE;
 }
 

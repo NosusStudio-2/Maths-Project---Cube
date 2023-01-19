@@ -2,7 +2,8 @@
 
 Application::Application() : debug(false), renderPrimitives(true), dt(0.16f)
 {
-	window = new ModuleWindow();
+	window3D = new ModuleWindow();
+	window2D = new Window();
 	input = new ModuleInput();
 	audio = new ModuleAudio();
 	scene_intro = new ModuleSceneIntro();
@@ -21,7 +22,8 @@ Application::Application() : debug(false), renderPrimitives(true), dt(0.16f)
 	// They will CleanUp() in reverse order
 
 	// Main Modules
-	AddModule(window);
+	AddModule(window3D);
+	AddModule(window2D);
 	AddModule(camera);
 	AddModule(tex);
 	AddModule(input);
