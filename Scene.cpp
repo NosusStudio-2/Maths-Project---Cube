@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ModuleSceneIntro.h"
 #include "ModuleInput.h"
 #include "Textures.h"
 #include "Render.h"
@@ -8,6 +9,7 @@
 #include "Maths.h"
 #include "Globals.h"
 #include "ModuleFonts.h"
+#include "glmath.h"
 
 #include <math.h>
 
@@ -107,79 +109,75 @@ update_status Scene::Update(float dt)
 {
 	UI_Update();
 
-	App->maths->isCameraRotation = true;
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		App->maths->whatisrotating.x = 1;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
-	{
-		App->maths->whatisrotating.x = 0;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-	{
-		App->maths->whatisrotating.x = -1;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
-	{
-		App->maths->whatisrotating.x = 0;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-	{
-		App->maths->whatisrotating.y = 1;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
-	{
-		App->maths->whatisrotating.y = 0;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
-	{
-		App->maths->whatisrotating.y = -1;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
-	{
-		App->maths->whatisrotating.y = 0;
-	}
+		App->maths->angles.x--;
+		MatrixXd e(3, 1);
+		e <<	App->maths->angles.z,
+				App->maths->angles.y,
+				App->maths->angles.x;
+		MatrixXd p = App->maths->RotationChangeOfWritting(e, 'e', 'p');
+		App->scene_intro->primitives[0]->transform.rotate((float)p(3), { (float)p(0),(float)p(1),(float)p(2) });
 
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		App->maths->whatisrotating.x = -1;
-		App->maths->isCameraRotation = false;
+	/*	App->maths->whatisrotating.x = -1;
+		App->maths->isCameraRotation = false;*/
 
 	}
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP)
+	//if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
+	//{
+	//	App->maths->whatisrotating.x = 0;
+	//}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		App->maths->whatisrotating.x = 0;
+		App->maths->angles.x++;
+		MatrixXd e(3, 1);
+		e << App->maths->angles.z,
+			App->maths->angles.y,
+			App->maths->angles.x;
+		MatrixXd p = App->maths->RotationChangeOfWritting(e, 'e', 'p');
+		App->scene_intro->primitives[0]->transform.rotate((float)p(3), { (float)p(0),(float)p(1),(float)p(2) });
+		//App->maths->whatisrotating.x = 1;
+		//App->maths->isCameraRotation = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	//if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	//{
+	//	App->maths->whatisrotating.x = 0;
+	//}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		App->maths->whatisrotating.x = 1;
-		App->maths->isCameraRotation = false;
+		App->maths->angles.y--;
+		MatrixXd e(3, 1);
+		e << App->maths->angles.z,
+			App->maths->angles.y,
+			App->maths->angles.x;
+		MatrixXd p = App->maths->RotationChangeOfWritting(e, 'e', 'p');
+		App->scene_intro->primitives[0]->transform.rotate((float)p(3), { (float)p(0),(float)p(1),(float)p(2) });
+		//App->maths->whatisrotating.y = -1;
+		//App->maths->isCameraRotation = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+	//if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+	//{
+	//	App->maths->whatisrotating.y = 0;
+	//}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		App->maths->whatisrotating.x = 0;
+		App->maths->angles.y++;
+		MatrixXd e(3, 1);
+		e << App->maths->angles.z,
+			App->maths->angles.y,
+			App->maths->angles.x;
+		MatrixXd p = App->maths->RotationChangeOfWritting(e, 'e', 'p');
+		App->scene_intro->primitives[0]->transform.rotate((float)p(3), { (float)p(0),(float)p(1),(float)p(2) });
+		//App->maths->whatisrotating.y = 1;
+		//App->maths->isCameraRotation = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		App->maths->whatisrotating.y = -1;
-		App->maths->isCameraRotation = false;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
-	{
-		App->maths->whatisrotating.y = 0;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		App->maths->whatisrotating.y = 1;
-		App->maths->isCameraRotation = false;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
-	{
-		App->maths->whatisrotating.y = 0;
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	//{
+	//	App->maths->whatisrotating.y = 0;
+	//}
+
+	App->scene_intro->primitives[0]->Update();
 
 	return update_status::UPDATE_CONTINUE;
 }

@@ -33,7 +33,7 @@ Application::Application() : debug(false), renderPrimitives(true), dt(0.16f)
 	AddModule(maths);
 	
 	// Scenes
-	//AddModule(scene_intro);
+	AddModule(scene_intro);
 	AddModule(scene);
 
 	// Renderer last!

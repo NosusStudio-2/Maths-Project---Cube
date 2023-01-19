@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "p2DynArray.h"
 #include "Globals.h"
+#include "glmath.h"
 
 class Primitive;
 class  PhysBody3D;
@@ -19,10 +20,14 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2) override;
 
 	bool CleanUp();
+	//Cube *c;
+	double a, yaw, pitch, roll;
+	p2DynArray<Primitive*> primitives;
 
 private:
+
+
 	void HandleDebugInput();
 	void DebugSpawnPrimitive(Primitive* p);
 
-	p2DynArray<Primitive*> primitives;
 };

@@ -38,9 +38,9 @@ bool Window::Init()
 		bool fullscreen_window = false;
 		bool opengl = false;
 
-		width = 734; 
-		height = 900; 
-		scale = 1; 
+		width = 734;
+		height = 900;
+		scale = 1;
 
 		if (fullscreen) flags |= SDL_WINDOW_FULLSCREEN;
 		if (borderless) flags |= SDL_WINDOW_BORDERLESS;
