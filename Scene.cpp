@@ -618,7 +618,8 @@ void Scene::UI_Update() {
 			App->maths->angles.z = newea(2, 0);
 			App->maths->angles.y = newea(1, 0);
 			App->maths->angles.x = newea(0, 0);
-			App->maths->cube1.Reset();
+			MatrixXd p = App->maths->RotationChangeOfWritting(newea, 'e', 'p');
+			App->scene_intro->primitives[0]->transform.rotate((float)p(3), { (float)p(0),(float)p(1),(float)p(2) });
 			App->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
@@ -645,8 +646,9 @@ void Scene::UI_Update() {
 			MatrixXd newea = App->maths->RotationChangeOfWritting(newp, 'p', 'e');
 			App->maths->angles.z = newea(2, 0);
 			App->maths->angles.y = newea(1, 0);
-			App->maths->angles.x = newea(0, 0);
-			App->maths->cube1.Reset();
+			App->maths->angles.x = newea(0, 0);			
+			MatrixXd p = App->maths->RotationChangeOfWritting(newea, 'e', 'p');
+			App->scene_intro->primitives[0]->transform.rotate((float)p(3), { (float)p(0),(float)p(1),(float)p(2) });
 			App->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
@@ -666,7 +668,8 @@ void Scene::UI_Update() {
 			App->maths->angles.z = newea(2, 0);
 			App->maths->angles.y = newea(1, 0);
 			App->maths->angles.x = newea(0, 0);
-			App->maths->cube1.Reset();
+			MatrixXd p = App->maths->RotationChangeOfWritting(newea, 'e', 'p');
+			App->scene_intro->primitives[0]->transform.rotate((float)p(3), { (float)p(0),(float)p(1),(float)p(2) });
 			App->maths->edited = true;
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
@@ -681,8 +684,13 @@ void Scene::UI_Update() {
 			App->maths->angles.z = eulerAngles[2].element;
 			App->maths->angles.y = eulerAngles[1].element;
 			App->maths->angles.x = eulerAngles[0].element;
+			MatrixXd newea(3,1);
+			newea <<	App->maths->angles.z,
+						App->maths->angles.y,
+						App->maths->angles.x;
 			App->maths->edited = true;
-			App->maths->cube1.Reset();
+			MatrixXd p = App->maths->RotationChangeOfWritting(newea, 'e', 'p');
+			App->scene_intro->primitives[0]->transform.rotate((float)p(3), { (float)p(0),(float)p(1),(float)p(2) });
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
