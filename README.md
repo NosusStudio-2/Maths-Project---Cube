@@ -1,4 +1,4 @@
-# Rotating Cube 
+# Rotating Cube by NosusStudio/2
 
 ## Description
 
@@ -9,12 +9,15 @@ This project is about how to develop a tool to control the orientation of 3D sha
  - A cube you can rotate.
  - An UI to see the cube's current rotation state.
  - You can also rotate the cube by clicking and writing in the UI.
- - You can move the camara angle.
+ - You can move the camara and its angle.
  
 ## Controls
 
- - A,W,S,D - Rotate the cube
- - Arrows  - Move the camera angle.
+ - Arrows - Rotate the cube
+ - W,A,S,D  - Move the camera
+ - Left click + drag - Rotate camera
+ - F1 - Activate debug mode
+ - 1,2,3,4 - While debug mode to create objects
 
 ## Developers
 
