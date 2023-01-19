@@ -14,6 +14,7 @@ Application::Application() : debug(false), renderPrimitives(true), dt(0.16f)
 	fonts = new ModuleFonts();
 	render = new Render();
 	maths = new Maths();
+	tex = new Textures();
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -22,6 +23,7 @@ Application::Application() : debug(false), renderPrimitives(true), dt(0.16f)
 	// Main Modules
 	AddModule(window);
 	AddModule(camera);
+	AddModule(tex);
 	AddModule(input);
 	AddModule(audio);
 	AddModule(fonts);

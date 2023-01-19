@@ -16,6 +16,7 @@
 #include "Maths.h"
 #include "Render.h"
 #include "ModuleFonts.h"
+#include "Textures.h"
 
 class Application
 {
@@ -32,6 +33,7 @@ public:
 	Maths* maths;
 	Render* render;
 	ModuleFonts* fonts;
+	Textures* tex;
 
 	bool debug;
 	bool renderPrimitives;

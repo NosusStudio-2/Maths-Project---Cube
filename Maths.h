@@ -20,7 +20,7 @@ struct Point3D
 	float x, y, z;
 };
 
-class Cube
+class Cube1
 {
 public:
 
@@ -81,7 +81,7 @@ public:
 	MatrixXd quaternion;
 	MatrixXd rotationVector;
 
-	Cube cube1;
+	Cube1 cube1;
 	Point3D rotationPivot;
 	Point3D angles, whatisrotating;
 	bool edited = false;
