@@ -2,9 +2,10 @@
 #define __Maths_H__
 
 #include "Module.h"
-#include "Point.h"
-#include <Eigen/Dense>
-#include <Eigen/Geometry>
+#include "p2Point.h"
+
+#include "Eigen/Dense"
+#include "Eigen/Geometry"
 
 
 using namespace Eigen;
@@ -51,7 +52,7 @@ public:
 	// Called each loop iteration
 	bool PreUpdate();
 
-	bool Update(float dt);
+	update_status Update(float dt);
 
 	bool PostUpdate();
 

@@ -1,13 +1,12 @@
-#include "App.h"
-#include "Input.h"
+#include "Application.h"
+#include "ModuleInput.h"
 #include "Textures.h"
-#include "Audio.h"
 #include "Render.h"
-#include "Window.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 #include "Scene.h"
 #include "Maths.h"
-#include "Defs.h"
-#include "Log.h"
+#include "Globals.h"
 #include "ModuleFonts.h"
 
 #include <math.h>
@@ -33,31 +32,31 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	app->maths->cube1.points[1 - 1] = { 100,100,100 };
-	app->maths->cube1.points[2 - 1] = { 200,100,100 };
-	app->maths->cube1.points[3 - 1] = { 200,200,100 };
-	app->maths->cube1.points[4 - 1] = { 100,200,100 };
-
-	app->maths->cube1.points[5 - 1] = { 100,100,200 };
-	app->maths->cube1.points[6 - 1] = { 200,100,200 };
-	app->maths->cube1.points[7 - 1] = { 200,200,200 };
-	app->maths->cube1.points[8 - 1] = { 100,200,200 };
-	app->maths->rotationPivot = { 0,0,0 };
+	App->maths->cube1.points[1 - 1] = { 100,100,100 };
+	App->maths->cube1.points[2 - 1] = { 200,100,100 };
+	App->maths->cube1.points[3 - 1] = { 200,200,100 };
+	App->maths->cube1.points[4 - 1] = { 100,200,100 };
+	
+	App->maths->cube1.points[5 - 1] = { 100,100,200 };
+	App->maths->cube1.points[6 - 1] = { 200,100,200 };
+	App->maths->cube1.points[7 - 1] = { 200,200,200 };
+	App->maths->cube1.points[8 - 1] = { 100,200,200 };
+	App->maths->rotationPivot = { 0,0,0 };
 	for (size_t i = 0; i < 8; i++)
 	{
-		app->maths->rotationPivot.x += app->maths->cube1.points[i].x;
-		app->maths->rotationPivot.y += app->maths->cube1.points[i].y;
-		app->maths->rotationPivot.z += app->maths->cube1.points[i].z;
+		App->maths->rotationPivot.x += app->maths->cube1.points[i].x;
+		App->maths->rotationPivot.y += app->maths->cube1.points[i].y;
+		App->maths->rotationPivot.z += app->maths->cube1.points[i].z;
 	}
-	app->maths->rotationPivot.x /= 8;
-	app->maths->rotationPivot.y /= 8;
-	app->maths->rotationPivot.z /= 8;
+	App->maths->rotationPivot.x /= 8;
+	App->maths->rotationPivot.y /= 8;
+	App->maths->rotationPivot.z /= 8;
 
-	UI = app->tex->Load("Assets/Textures/Maths-Cube_Borders.png");
+	UI = App->tex->Load("Assets/Textures/Maths-Cube_Borders.png");
 
 	char lookupTable[] = { "abcdefghijklmnopqrstuvwxyz-0123456789.,;:$#'! /?%&()@ " };
-	Cube_font_black = app->fonts->Load("Assets/Fonts/sprite_font_black.png", lookupTable, 6);
-	Cube_font_white = app->fonts->Load("Assets/Fonts/sprite_font_white.png", lookupTable, 6);
+	Cube_font_black = App->fonts->Load("Assets/Fonts/sprite_font_black.png", lookupTable, 6);
+	Cube_font_white = App->fonts->Load("Assets/Fonts/sprite_font_white.png", lookupTable, 6);
 
 	for (size_t i = 0; i < 4; i++)
 	{
@@ -108,78 +107,78 @@ bool Scene::Update(float dt)
 {
 	UI_Update();
 
-	app->maths->isCameraRotation = true;
+	App->maths->isCameraRotation = true;
 
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
-		app->maths->whatisrotating.x = 1;
+		App->maths->whatisrotating.x = 1;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
 	{
-		app->maths->whatisrotating.x = 0;
+		App->maths->whatisrotating.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
-		app->maths->whatisrotating.x = -1;
+		App->maths->whatisrotating.x = -1;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
-		app->maths->whatisrotating.x = 0;
+		App->maths->whatisrotating.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		app->maths->whatisrotating.y = 1;
+		App->maths->whatisrotating.y = 1;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
 	{
-		app->maths->whatisrotating.y = 0;
+		App->maths->whatisrotating.y = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		app->maths->whatisrotating.y = -1;
+		App->maths->whatisrotating.y = -1;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
 	{
-		app->maths->whatisrotating.y = 0;
+		App->maths->whatisrotating.y = 0;
 	}
 
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		app->maths->whatisrotating.x = -1;
-		app->maths->isCameraRotation = false;
+		App->maths->whatisrotating.x = -1;
+		App->maths->isCameraRotation = false;
 
 	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP)
 	{
-		app->maths->whatisrotating.x = 0;
+		App->maths->whatisrotating.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		app->maths->whatisrotating.x = 1;
-		app->maths->isCameraRotation = false;
+		App->maths->whatisrotating.x = 1;
+		App->maths->isCameraRotation = false;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
 	{
-		app->maths->whatisrotating.x = 0;
+		App->maths->whatisrotating.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		app->maths->whatisrotating.y = -1;
-		app->maths->isCameraRotation = false;
+		App->maths->whatisrotating.y = -1;
+		App->maths->isCameraRotation = false;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
-		app->maths->whatisrotating.y = 0;
+		App->maths->whatisrotating.y = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		app->maths->whatisrotating.y = 1;
-		app->maths->isCameraRotation = false;
+		App->maths->whatisrotating.y = 1;
+		App->maths->isCameraRotation = false;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
-		app->maths->whatisrotating.y = 0;
+		App->maths->whatisrotating.y = 0;
 	}
 
 	return true;
@@ -190,11 +189,11 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawTexture(UI, 0, 0);
+	App->render->DrawTexture(UI, 0, 0);
 
 	PrintUI();
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
 	return ret;
@@ -205,9 +204,9 @@ bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	app->tex->UnLoad(UI);
-	app->fonts->UnLoad(Cube_font_black);
-	app->fonts->UnLoad(Cube_font_white);
+	App->tex->UnLoad(UI);
+	App->fonts->UnLoad(Cube_font_black);
+	App->fonts->UnLoad(Cube_font_white);
 
 	return true;
 }
@@ -218,196 +217,196 @@ void Scene::PrintUI() {
 		float element = (float)quaternion[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[0].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else{ app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText); }
+		else{ App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (quaternion[1].state != State::EDITING) {
 		float element = (float)quaternion[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[1].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (quaternion[2].state != State::EDITING) {
 		float element = (float)quaternion[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[2].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (quaternion[3].state != State::EDITING) {
 		float element = (float)quaternion[3].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (quaternion[3].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)quaternion[3].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 0), Cube_font_black, translationToText);
 	}
 
 	if (eulerAxisAngle[0].state != State::EDITING) {
 		float element = (float)eulerAxisAngle[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAxisAngle[0].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAxisAngle[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 1), Cube_font_black, translationToText);
 	}
 
 	if (eulerAxisAngle[1].state != State::EDITING) {
 		float element = (float)eulerAxisAngle[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAxisAngle[1].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAxisAngle[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 1), Cube_font_black, translationToText);
 	}
 
 	if (eulerAxisAngle[2].state != State::EDITING) {
 		float element = (float)eulerAxisAngle[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAxisAngle[2].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAxisAngle[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 1), Cube_font_black, translationToText);
 	}
 
 	if (eulerAxisAngle[3].state != State::EDITING) {
 		float element = (float)eulerAxisAngle[3].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAxisAngle[3].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAxisAngle[3].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 3), 275 + (108 * 1), Cube_font_black, translationToText);
 	}
 
 	if (rotationVector[0].state != State::EDITING) {
 		float element = (float)rotationVector[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (rotationVector[0].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)rotationVector[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 2), Cube_font_black, translationToText);
 	}
 
 	if (rotationVector[1].state != State::EDITING) {
 		float element = (float)rotationVector[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (rotationVector[1].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)rotationVector[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 2), Cube_font_black, translationToText);
 	}
 
 	if (rotationVector[2].state != State::EDITING) {
 		float element = (float)rotationVector[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (rotationVector[2].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)rotationVector[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 2), Cube_font_black, translationToText);
 	}
 
 	if (eulerAngles[0].state != State::EDITING) {
 		float element = (float)eulerAngles[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAngles[0].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAngles[0].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 0), 275 + (108 * 3), Cube_font_black, translationToText);
 	}
 
 	if (eulerAngles[1].state != State::EDITING) {
 		float element = (float)eulerAngles[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAngles[1].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAngles[1].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 1), 275 + (108 * 3), Cube_font_black, translationToText);
 	}
 
 	if (eulerAngles[2].state != State::EDITING) {
 		float element = (float)eulerAngles[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
 		if (eulerAngles[2].state == State::NORMAL) {
-			app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_white, translationToText);
+			App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_white, translationToText);
 		}
-		else { app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText); }
+		else { App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText); }
 	}
 	else if (blinking >= 10) {
 		float element = (float)eulerAngles[2].element;
 		snprintf(translationToText, sizeof translationToText, "%f", element);
-		app->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText);
+		App->fonts->BlitText(1023 + (143 * 2), 275 + (108 * 3), Cube_font_black, translationToText);
 	}
 
 	if(generalState != State::NORMAL){ blinking++; }
@@ -419,137 +418,137 @@ void Scene::PrintUI() {
 Button Scene::ButtonDetection() {
 	Button buttonDetected;
 
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	app->input->GetMouseX() > 900 &&
-	app->input->GetMouseX() < 991 &&
-	app->input->GetMouseY() > (260 + (109 * 0)) &&
-	app->input->GetMouseY() < (300 + (109 * 0))) {
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+	App->input->GetMouseX() > 900 &&
+	App->input->GetMouseX() < 991 &&
+	App->input->GetMouseY() > (260 + (109 * 0)) &&
+	App->input->GetMouseY() < (300 + (109 * 0))) {
 		buttonDetected = Button::PUSH1;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > 900 &&
-		app->input->GetMouseX() < 991 &&
-		app->input->GetMouseY() > (260 + (109 * 1)) &&
-		app->input->GetMouseY() < (300 + (109 * 1))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > 900 &&
+		App->input->GetMouseX() < 991 &&
+		App->input->GetMouseY() > (260 + (109 * 1)) &&
+		App->input->GetMouseY() < (300 + (109 * 1))) {
 		buttonDetected = Button::PUSH2;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > 900 &&
-		app->input->GetMouseX() < 991 &&
-		app->input->GetMouseY() > (260 + (109 * 2)) &&
-		app->input->GetMouseY() < (300 + (109 * 2))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > 900 &&
+		App->input->GetMouseX() < 991 &&
+		App->input->GetMouseY() > (260 + (109 * 2)) &&
+		App->input->GetMouseY() < (300 + (109 * 2))) {
 		buttonDetected = Button::PUSH3;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > 900 &&
-		app->input->GetMouseX() < 991 &&
-		app->input->GetMouseY() > (260 + (109 * 3)) &&
-		app->input->GetMouseY() < (300 + (109 * 3))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > 900 &&
+		App->input->GetMouseX() < 991 &&
+		App->input->GetMouseY() > (260 + (109 * 3)) &&
+		App->input->GetMouseY() < (300 + (109 * 3))) {
 		buttonDetected = Button::PUSH4;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 0)) &&
-		app->input->GetMouseX() < (1132 + (143 * 0)) &&
-		app->input->GetMouseY() > (261 + (108 * 0)) &&
-		app->input->GetMouseY() < (299 + (108 * 0))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 0)) &&
+		App->input->GetMouseX() < (1132 + (143 * 0)) &&
+		App->input->GetMouseY() > (261 + (108 * 0)) &&
+		App->input->GetMouseY() < (299 + (108 * 0))) {
 		buttonDetected = Button::QUATERNION1;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 1)) &&
-		app->input->GetMouseX() < (1132 + (143 * 1)) &&
-		app->input->GetMouseY() > (261 + (108 * 0)) &&
-		app->input->GetMouseY() < (299 + (108 * 0))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 1)) &&
+		App->input->GetMouseX() < (1132 + (143 * 1)) &&
+		App->input->GetMouseY() > (261 + (108 * 0)) &&
+		App->input->GetMouseY() < (299 + (108 * 0))) {
 		buttonDetected = Button::QUATERNION2;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 2)) &&
-		app->input->GetMouseX() < (1132 + (143 * 2)) &&
-		app->input->GetMouseY() > (261 + (108 * 0)) &&
-		app->input->GetMouseY() < (299 + (108 * 0))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 2)) &&
+		App->input->GetMouseX() < (1132 + (143 * 2)) &&
+		App->input->GetMouseY() > (261 + (108 * 0)) &&
+		App->input->GetMouseY() < (299 + (108 * 0))) {
 		buttonDetected = Button::QUATERNION3;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 3)) &&
-		app->input->GetMouseX() < (1132 + (143 * 3)) &&
-		app->input->GetMouseY() > (261 + (108 * 0)) &&
-		app->input->GetMouseY() < (299 + (108 * 0))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 3)) &&
+		App->input->GetMouseX() < (1132 + (143 * 3)) &&
+		App->input->GetMouseY() > (261 + (108 * 0)) &&
+		App->input->GetMouseY() < (299 + (108 * 0))) {
 		buttonDetected = Button::QUATERNION4;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 0)) &&
-		app->input->GetMouseX() < (1132 + (143 * 0)) &&
-		app->input->GetMouseY() > (261 + (108 * 1)) &&
-		app->input->GetMouseY() < (299 + (108 * 1))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 0)) &&
+		App->input->GetMouseX() < (1132 + (143 * 0)) &&
+		App->input->GetMouseY() > (261 + (108 * 1)) &&
+		App->input->GetMouseY() < (299 + (108 * 1))) {
 		buttonDetected = Button::AXISANGLE1;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 1)) &&
-		app->input->GetMouseX() < (1132 + (143 * 1)) &&
-		app->input->GetMouseY() > (261 + (108 * 1)) &&
-		app->input->GetMouseY() < (299 + (108 * 1))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 1)) &&
+		App->input->GetMouseX() < (1132 + (143 * 1)) &&
+		App->input->GetMouseY() > (261 + (108 * 1)) &&
+		App->input->GetMouseY() < (299 + (108 * 1))) {
 		buttonDetected = Button::AXISANGLE2;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 2)) &&
-		app->input->GetMouseX() < (1132 + (143 * 2)) &&
-		app->input->GetMouseY() > (261 + (108 * 1)) &&
-		app->input->GetMouseY() < (299 + (108 * 1))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 2)) &&
+		App->input->GetMouseX() < (1132 + (143 * 2)) &&
+		App->input->GetMouseY() > (261 + (108 * 1)) &&
+		App->input->GetMouseY() < (299 + (108 * 1))) {
 		buttonDetected = Button::AXISANGLE3;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 3)) &&
-		app->input->GetMouseX() < (1132 + (143 * 3)) &&
-		app->input->GetMouseY() > (261 + (108 * 1)) &&
-		app->input->GetMouseY() < (299 + (108 * 1))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 3)) &&
+		App->input->GetMouseX() < (1132 + (143 * 3)) &&
+		App->input->GetMouseY() > (261 + (108 * 1)) &&
+		App->input->GetMouseY() < (299 + (108 * 1))) {
 		buttonDetected = Button::AXISANGLE4;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 0)) &&
-		app->input->GetMouseX() < (1132 + (143 * 0)) &&
-		app->input->GetMouseY() > (261 + (108 * 2)) &&
-		app->input->GetMouseY() < (299 + (108 * 2))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 0)) &&
+		App->input->GetMouseX() < (1132 + (143 * 0)) &&
+		App->input->GetMouseY() > (261 + (108 * 2)) &&
+		App->input->GetMouseY() < (299 + (108 * 2))) {
 		buttonDetected = Button::ROTATIONANGLES1;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 1)) &&
-		app->input->GetMouseX() < (1132 + (143 * 1)) &&
-		app->input->GetMouseY() > (261 + (108 * 2)) &&
-		app->input->GetMouseY() < (299 + (108 * 2))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 1)) &&
+		App->input->GetMouseX() < (1132 + (143 * 1)) &&
+		App->input->GetMouseY() > (261 + (108 * 2)) &&
+		App->input->GetMouseY() < (299 + (108 * 2))) {
 		buttonDetected = Button::ROTATIONANGLES2;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-		app->input->GetMouseX() > (1005 + (143 * 2)) &&
-		app->input->GetMouseX() < (1132 + (143 * 2)) &&
-		app->input->GetMouseY() > (261 + (108 * 2)) &&
-		app->input->GetMouseY() < (299 + (108 * 2))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+		App->input->GetMouseX() > (1005 + (143 * 2)) &&
+		App->input->GetMouseX() < (1132 + (143 * 2)) &&
+		App->input->GetMouseY() > (261 + (108 * 2)) &&
+		App->input->GetMouseY() < (299 + (108 * 2))) {
 		buttonDetected = Button::ROTATIONANGLES3;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	app->input->GetMouseX() > (1005 + (143 * 0)) &&
-	app->input->GetMouseX() < (1132 + (143 * 0)) &&
-	app->input->GetMouseY() > (261 + (108 * 3)) &&
-	app->input->GetMouseY() < (299 + (108 * 3))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+	App->input->GetMouseX() > (1005 + (143 * 0)) &&
+	App->input->GetMouseX() < (1132 + (143 * 0)) &&
+	App->input->GetMouseY() > (261 + (108 * 3)) &&
+	App->input->GetMouseY() < (299 + (108 * 3))) {
 	buttonDetected = Button::EULERANGLES1;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	app->input->GetMouseX() > (1005 + (143 * 1)) &&
-	app->input->GetMouseX() < (1132 + (143 * 1)) &&
-	app->input->GetMouseY() > (261 + (108 * 3)) &&
-	app->input->GetMouseY() < (299 + (108 * 3))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+	App->input->GetMouseX() > (1005 + (143 * 1)) &&
+	App->input->GetMouseX() < (1132 + (143 * 1)) &&
+	App->input->GetMouseY() > (261 + (108 * 3)) &&
+	App->input->GetMouseY() < (299 + (108 * 3))) {
 	buttonDetected = Button::EULERANGLES2;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	app->input->GetMouseX() > (1005 + (143 * 2)) &&
-	app->input->GetMouseX() < (1132 + (143 * 2)) &&
-	app->input->GetMouseY() > (261 + (108 * 3)) &&
-	app->input->GetMouseY() < (299 + (108 * 3))) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+	App->input->GetMouseX() > (1005 + (143 * 2)) &&
+	App->input->GetMouseX() < (1132 + (143 * 2)) &&
+	App->input->GetMouseY() > (261 + (108 * 3)) &&
+	App->input->GetMouseY() < (299 + (108 * 3))) {
 	buttonDetected = Button::EULERANGLES3;
 	}
-	else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
-	app->input->GetMouseX() > (1470) &&
-	app->input->GetMouseX() < (1546) &&
-	app->input->GetMouseY() > (775) &&
-	app->input->GetMouseY() < (815)) {
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN &&
+	App->input->GetMouseX() > (1470) &&
+	App->input->GetMouseX() < (1546) &&
+	App->input->GetMouseY() > (775) &&
+	App->input->GetMouseY() < (815)) {
 	buttonDetected = Button::RESET;
 	}
 	else { buttonDetected = Button::NOBUTTON; }
@@ -566,28 +565,28 @@ void Scene::UI_Update() {
 		{
 			if (quaternion[i].state != State::EDITED)
 			{
-				quaternion[i].element = app->maths->quaternion(i, 0);
+				quaternion[i].element = App->maths->quaternion(i, 0);
 			}
 		}
 		for (size_t i = 0; i < 4; i++)
 		{
 			if (eulerAxisAngle[i].state != State::EDITED)
 			{
-				eulerAxisAngle[i].element = app->maths->eulerAxisAngles(i, 0);
+				eulerAxisAngle[i].element = App->maths->eulerAxisAngles(i, 0);
 			}
 		}
 		for (size_t i = 0; i < 3; i++)
 		{
 			if (rotationVector[i].state != State::EDITED)
 			{
-				rotationVector[i].element = app->maths->rotationVector(i, 0);
+				rotationVector[i].element = App->maths->rotationVector(i, 0);
 			}
 		}
 		for (size_t i = 0; i < 3; i++)
 		{
 			if (eulerAngles[i].state != State::EDITED)
 			{	//3 - i cz euler angles in ui is x,y,z; in MatrixXd is z,y,x
-				eulerAngles[i].element = app->maths->eulerAngles(2 - i, 0);
+				eulerAngles[i].element = App->maths->eulerAngles(2 - i, 0);
 			}
 		}
 		for (size_t i = 0; i < 3; i++)
@@ -596,7 +595,7 @@ void Scene::UI_Update() {
 			{
 				if (rotationMatrix[i][j].state != State::EDITED)
 				{
-					rotationMatrix[i][j].element = app->maths->rotationMatrix(i, j);
+					rotationMatrix[i][j].element = App->maths->rotationMatrix(i, j);
 				}
 			}
 		}
@@ -617,7 +616,7 @@ void Scene::UI_Update() {
 					quaternion[1].element,
 					quaternion[2].element,
 					quaternion[3].element;
-			MatrixXd newea = app->maths->RotationChangeOfWritting(newq, 'q', 'e');
+			MatrixXd newea = App->maths->RotationChangeOfWritting(newq, 'q', 'e');
 			app->maths->angles.z = newea(2, 0);
 			app->maths->angles.y = newea(1, 0);
 			app->maths->angles.x = newea(0, 0);
@@ -645,7 +644,7 @@ void Scene::UI_Update() {
 					newnewp(2, 0),
 					newnewp(3, 0);
 
-			MatrixXd newea = app->maths->RotationChangeOfWritting(newp, 'p', 'e');
+			MatrixXd newea = App->maths->RotationChangeOfWritting(newp, 'p', 'e');
 			app->maths->angles.z = newea(2, 0);
 			app->maths->angles.y = newea(1, 0);
 			app->maths->angles.x = newea(0, 0);
@@ -665,7 +664,7 @@ void Scene::UI_Update() {
 			newv << rotationVector[0].element,
 					rotationVector[1].element,
 					rotationVector[2].element;
-			MatrixXd newea = app->maths->RotationChangeOfWritting(newv, 'v', 'e');
+			MatrixXd newea = App->maths->RotationChangeOfWritting(newv, 'v', 'e');
 			app->maths->angles.z = newea(2, 0);
 			app->maths->angles.y = newea(1, 0);
 			app->maths->angles.x = newea(0, 0);
@@ -681,11 +680,11 @@ void Scene::UI_Update() {
 	case PUSH4:
 		if (UIelementStateCheck(eulerAngles, 3)) {
 			//Rotate the cube via Euler angles
-			app->maths->angles.z = eulerAngles[2].element;
-			app->maths->angles.y = eulerAngles[1].element;
-			app->maths->angles.x = eulerAngles[0].element;
-			app->maths->edited = true;
-			app->maths->cube1.Reset();
+			App->maths->angles.z = eulerAngles[2].element;
+			App->maths->angles.y = eulerAngles[1].element;
+			App->maths->angles.x = eulerAngles[0].element;
+			App->maths->edited = true;
+			App->maths->cube1.Reset();
 			generalState = State::NORMAL;
 			SetNormal(quaternion, 4);
 			SetNormal(eulerAxisAngle, 4);
@@ -911,59 +910,59 @@ void Scene::UI_Update() {
 }
 
 Keys Scene::KeyInputs() {
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		return Keys::ENTER;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
 	{
 		return Keys::KEYDEL;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_PERIOD) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_PERIOD) == KEY_DOWN)
 	{
 		return Keys::KEYDOT;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_SLASH) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_DOWN)
 	{
 		return Keys::KEYMINUS;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 	{
 		return Keys::KEY0;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		return Keys::KEY1;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		return Keys::KEY2;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
 		return Keys::KEY3;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{
 		return Keys::KEY4;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 	{
 		return Keys::KEY5;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
 	{
 		return Keys::KEY6;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
 	{
 		return Keys::KEY7;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 	{
 		return Keys::KEY8;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 	{
 		return Keys::KEY9;
 	}

@@ -12,6 +12,11 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 
+#include "Scene.h"
+#include "Maths.h"
+#include "Render.h"
+#include "ModuleFonts.h"
+
 class Application
 {
 public:
@@ -22,6 +27,11 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
+
+	Scene* scene;
+	Maths* maths;
+	Render* render;
+	ModuleFonts* fonts;
 
 	bool debug;
 	bool renderPrimitives;

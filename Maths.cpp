@@ -2,7 +2,7 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include "Eigen/Dense"
-#include "App.h"
+#include "Application.h"
 #include "Render.h"
 
 #include "Maths.h"
@@ -90,9 +90,8 @@ bool Maths::PreUpdate()
 	return ret;
 }
 
-bool Maths::Update(float dt)
+update_status Maths::Update(float dt)
 {
-	bool ret = true;
 
 	//remember euler axis angle uses ZYX SYSTEM (and, it will recieve and return the euler angles in the following order -> z,y,x), all angles are in degree!
 	//if you want to recieve, euler axis angle, you will recieve a mat(4,1), where 3 first components are axis, and the 4th the angle(in degree)
@@ -111,27 +110,27 @@ bool Maths::Update(float dt)
 	rotationVector = RotationChangeOfWritting(eulerAngles, 'e', 'v');
 
 
-	return ret;
+	return update_status::UPDATE_CONTINUE;
 }
 
 bool Maths::PostUpdate()
 {
 	bool ret = true;
 	//print cube
-	app->render->DrawLine(cube1.points[0].x + 300, cube1.points[0].y + 100, cube1.points[1].x + 300, cube1.points[1].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[2].x + 300, cube1.points[2].y + 100, cube1.points[1].x + 300, cube1.points[1].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[2].x + 300, cube1.points[2].y + 100, cube1.points[3].x + 300, cube1.points[3].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[0].x + 300, cube1.points[0].y + 100, cube1.points[3].x + 300, cube1.points[3].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[0].x + 300, cube1.points[0].y + 100, cube1.points[1].x + 300, cube1.points[1].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[2].x + 300, cube1.points[2].y + 100, cube1.points[1].x + 300, cube1.points[1].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[2].x + 300, cube1.points[2].y + 100, cube1.points[3].x + 300, cube1.points[3].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[0].x + 300, cube1.points[0].y + 100, cube1.points[3].x + 300, cube1.points[3].y + 100, 255, 255, 255);
 
-	app->render->DrawLine(cube1.points[0+4].x + 300, cube1.points[0+4].y + 100, cube1.points[1+4].x + 300, cube1.points[1+4].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[2+4].x + 300, cube1.points[2+4].y + 100, cube1.points[1+4].x + 300, cube1.points[1+4].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[2+4].x + 300, cube1.points[2+4].y + 100, cube1.points[3+4].x + 300, cube1.points[3+4].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[0+4].x + 300, cube1.points[0+4].y + 100, cube1.points[3+4].x + 300, cube1.points[3+4].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[0+4].x + 300, cube1.points[0+4].y + 100, cube1.points[1+4].x + 300, cube1.points[1+4].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[2+4].x + 300, cube1.points[2+4].y + 100, cube1.points[1+4].x + 300, cube1.points[1+4].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[2+4].x + 300, cube1.points[2+4].y + 100, cube1.points[3+4].x + 300, cube1.points[3+4].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[0+4].x + 300, cube1.points[0+4].y + 100, cube1.points[3+4].x + 300, cube1.points[3+4].y + 100, 255, 255, 255);
 
-	app->render->DrawLine(cube1.points[0].x + 300, cube1.points[0].y + 100, cube1.points[4].x + 300, cube1.points[4].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[1].x + 300, cube1.points[1].y + 100, cube1.points[5].x + 300, cube1.points[5].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[2].x + 300, cube1.points[2].y + 100, cube1.points[6].x + 300, cube1.points[6].y + 100, 255, 255, 255);
-	app->render->DrawLine(cube1.points[3].x + 300, cube1.points[3].y + 100, cube1.points[7].x + 300, cube1.points[7].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[0].x + 300, cube1.points[0].y + 100, cube1.points[4].x + 300, cube1.points[4].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[1].x + 300, cube1.points[1].y + 100, cube1.points[5].x + 300, cube1.points[5].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[2].x + 300, cube1.points[2].y + 100, cube1.points[6].x + 300, cube1.points[6].y + 100, 255, 255, 255);
+	App->render->DrawLine(cube1.points[3].x + 300, cube1.points[3].y + 100, cube1.points[7].x + 300, cube1.points[7].y + 100, 255, 255, 255);
 	return ret;
 }
 

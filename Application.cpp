@@ -10,6 +10,11 @@ Application::Application() : debug(false), renderPrimitives(true), dt(0.16f)
 	camera = new ModuleCamera3D();
 	physics = new ModulePhysics3D();
 
+	scene = new Scene();
+	fonts = new ModuleFonts();
+	render = new Render();
+	maths = new Maths();
+
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -19,13 +24,17 @@ Application::Application() : debug(false), renderPrimitives(true), dt(0.16f)
 	AddModule(camera);
 	AddModule(input);
 	AddModule(audio);
+	AddModule(fonts);
 	AddModule(physics);
+	AddModule(maths);
 	
 	// Scenes
-	AddModule(scene_intro);
+	//AddModule(scene_intro);
+	AddModule(scene);
 
 	// Renderer last!
 	AddModule(renderer3D);
+	AddModule(render);
 }
 
 Application::~Application()

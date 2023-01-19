@@ -90,6 +90,9 @@
     <ClInclude Include="Scene.h">
       <Filter>Sources\Modules\UWU</Filter>
     </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>Sources\Modules\UWU</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -147,6 +150,9 @@
       <Filter>Sources\Modules\UWU</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
+      <Filter>Sources\Modules\UWU</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
       <Filter>Sources\Modules\UWU</Filter>
     </ClCompile>
   </ItemGroup>
